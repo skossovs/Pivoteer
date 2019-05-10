@@ -1,9 +1,0 @@
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\WpfGroups\Pivot.Accessories\bin\Debug\Pivot.Accessories.dll
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\WpfGroups\Pivot.Accessories\bin\Debug\Pivot.Accessories.pdb
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\WpfGroups\Pivot.Accessories\obj\Debug\Pivot.Accessories.dll
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\WpfGroups\Pivot.Accessories\obj\Debug\Pivot.Accessories.pdb
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\WpfGroups\Pivot.Accessories\obj\Debug\Pivot.Accessories.csprojResolveAssemblyReference.cache
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\Pivot.Accessories\bin\Debug\Pivot.Accessories.dll
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\Pivot.Accessories\bin\Debug\Pivot.Accessories.pdb
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\Pivot.Accessories\obj\Debug\Pivot.Accessories.dll
-C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\Pivot.Accessories\obj\Debug\Pivot.Accessories.pdb
