@@ -1,0 +1,14 @@
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\obj\Debug\TDD_PivotStructure.csprojResolveAssemblyReference.cache
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\TDD_PivotStructure.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\TDD_PivotStructure.pdb
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Pivot.Accessories.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Pivot.Accessories.pdb
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\obj\Debug\TDD_PivotStructure.dll
+C:\Users\Stan\Documents\Visual Studio 2017\Projects\TDD_PivotStructure\TDD_PivotStructure\obj\Debug\TDD_PivotStructure.pdb
