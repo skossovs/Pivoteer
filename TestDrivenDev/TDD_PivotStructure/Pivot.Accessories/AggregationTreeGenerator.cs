@@ -89,24 +89,6 @@ namespace Pivot.Accessories
 
         #region functors
 
-        // TODO: replace it with Attributes
-        public Func<List<decimal?>, decimal?>[] GenerateSummariesFunctionArray(int maxLevels)
-        {
-            var ar = new Func<List<decimal?>, decimal?>[maxLevels + 1];
-
-            for(int i=0; i <= maxLevels; i++)
-            {
-                ar[i] = (l) =>
-                {
-                    decimal? acc = null;
-                    l.ForEach(t => acc = (acc ?? 0) + (t ?? 0) );
-                    return acc;
-                };
-            }
-
-            return ar;
-        }
-
         public Func<int, decimal?> CreateXGetter(int y, string[,] matrix)
         {
             return  x => {

@@ -85,9 +85,6 @@ namespace Pivot.Accessories.PivotCoordinates
 
             mmx.AggregationFunctionVector = _typeWrapper.XType.AggregationFunctionsByLevel;
             mmy.AggregationFunctionVector = _typeWrapper.YType.AggregationFunctionsByLevel;
-            // TODO: clean up
-            //            mmx.AggregationFunctionVector = utilsAggregation.GenerateSummariesFunctionArray(_typeWrapper.XType.MaxDim);
-            //            mmy.AggregationFunctionVector = utilsAggregation.GenerateSummariesFunctionArray(_typeWrapper.YType.MaxDim);
 
             var aggXSeedTree = utilsAggregation.GenerateXAggregationTree(dicX);
             var aggYSeedTree = utilsAggregation.GenerateYAggregationTree(dicY);
