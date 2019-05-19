@@ -48,22 +48,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGenerators\ShopRiteSalesData.cs" />
-    <Compile Include="DataGenerators\SmallDatasets.cs" />
-    <Compile Include="DataOutput\CSVHelper.cs" />
-    <Compile Include="DataStructures\AggregationFunctions.cs" />
-    <Compile Include="DataStructures\ClassesWithFields.cs" />
-    <Compile Include="Tests\Attributes\TDD_FieldMapping.cs" />
-    <Compile Include="Tests\Attributes\TDD_FunctionTest.cs" />
-    <Compile Include="Tests\PivotCoordinates\TDD_DictionaryTests.cs" />
-    <Compile Include="Tests\PivotCoordinates\TDD_PivotTests.cs" />
+    <Compile Include="src\DataGenerators\ShopRiteSalesData.cs" />
+    <Compile Include="src\DataGenerators\SmallDatasets.cs" />
+    <Compile Include="src\DataOutput\CSVHelper.cs" />
+    <Compile Include="src\DataStructures\AggregationFunctions.cs" />
+    <Compile Include="src\DataStructures\ClassesWithFields.cs" />
+    <Compile Include="src\Tests\Attributes\TDD_FieldMapping.cs" />
+    <Compile Include="src\Tests\Attributes\TDD_FunctionTest.cs" />
+    <Compile Include="src\Tests\PivotCoordinates\TDD_DictionaryTests.cs" />
+    <Compile Include="src\Tests\PivotCoordinates\TDD_PivotTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\Miscellaneous\" />
+    <Folder Include="src\Tests\Miscellaneous\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pivot.Accessories\Pivot.Accessories.csproj">
