@@ -21,8 +21,8 @@
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File" DataContext="{Binding Source={StaticResource ShellViewModel}}">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
+                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}" CommandParameter="NEW" />
+                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}" CommandParameter="OPEN"/>
                     <MenuItem Header="_Save" />
                     <Separator />
                     <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}" CommandParameter="EXIT" />

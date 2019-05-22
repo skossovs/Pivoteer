@@ -14,7 +14,10 @@ namespace PivoteerWPF.MVVM
         private const string C_SAVE = "SAVE";
         private const string C_EXIT = "EXIT";
 
+        Common.ProjectFile<Project> projectFile;
+
         private readonly DelegateCommand<string> _fileMenuCommand;
+
         public DelegateCommand<string> FileMenuCommand
         {
             get { return _fileMenuCommand; }
@@ -22,6 +25,8 @@ namespace PivoteerWPF.MVVM
 
         public ShellViewModel()
         {
+            projectFile = new ProjectFile<Project>();
+
             _fileMenuCommand = new DelegateCommand<string>(
                 (s) =>
                 {
@@ -31,6 +36,8 @@ namespace PivoteerWPF.MVVM
                             Common.ApplicationCommands.ExitApplication();
                             break;
                         case C_NEW:
+                            projectFile.CreateNew();
+                            break;
                         case C_OPEN:
                         case C_SAVE:
                             break;
