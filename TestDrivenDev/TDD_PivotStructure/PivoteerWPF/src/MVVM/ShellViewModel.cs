@@ -28,10 +28,14 @@ namespace PivoteerWPF.MVVM
                     switch (s)
                     {
                         case C_EXIT:
+                            Common.ApplicationCommands.ExitApplication();
+                            break;
                         case C_NEW:
                         case C_OPEN:
                         case C_SAVE:
                             break;
+                        default:
+                            throw new Exception("Unrecognized command");
                     }
                 }, //Execute
             (s) => { return true; } //CanExecute
