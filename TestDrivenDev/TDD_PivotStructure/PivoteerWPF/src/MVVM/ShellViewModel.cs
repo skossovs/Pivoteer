@@ -39,7 +39,10 @@ namespace PivoteerWPF.MVVM
                             projectFile.CreateNew();
                             break;
                         case C_OPEN:
+                            projectFile.Load();
+                            break;
                         case C_SAVE:
+                            projectFile.Save();
                             break;
                         default:
                             throw new Exception("Unrecognized command");

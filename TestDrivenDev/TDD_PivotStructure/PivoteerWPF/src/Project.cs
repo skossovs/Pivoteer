@@ -9,5 +9,6 @@ namespace PivoteerWPF
     // TODO: rename this project representation
     class Project
     {
+        public string ExcelFileFullPath;
     }
 }

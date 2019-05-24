@@ -24,6 +24,8 @@ namespace PivoteerWPF.Common
             }
         }
 
+        public T Content { get { return content; } }
+
         public ProjectFile()
         {
             path = System.IO.Directory.GetCurrentDirectory();
@@ -36,14 +38,17 @@ namespace PivoteerWPF.Common
             content = new T();
             if(firstTime)
             {
-                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-                openFileDialog.InitialDirectory = path;
-                openFileDialog.FileName         = fileName;
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
-                if(openFileDialog.ShowDialog() == true)
+                saveFileDialog.InitialDirectory = path;
+                saveFileDialog.FileName         = fileName;
+                saveFileDialog.AddExtension     = true;
+                saveFileDialog.DefaultExt       = "json";
+
+                if(saveFileDialog.ShowDialog() == true)
                 {
-                    fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
-                    path     = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
+                    fileName = System.IO.Path.GetFileName(saveFileDialog.FileName);
+                    path     = System.IO.Path.GetDirectoryName(saveFileDialog.FileName);
                     firstTime = false;
                 }
             }
@@ -53,23 +58,28 @@ namespace PivoteerWPF.Common
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.InitialDirectory = path;
+            openFileDialog.AddExtension = true;
+            openFileDialog.DefaultExt = "json";
 
             if (openFileDialog.ShowDialog() == true)
             {
                 fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
                 path = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
             }
-            // TODO: Load object
+            // TODO: too complicated, get rid of types.
+            content = (T) ApplicationCommands.ReadJsonObject(FullPath, typeof(T));
         }
         public void Save()
         {
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.InitialDirectory = path;
+            var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.InitialDirectory = path;
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.DefaultExt = "json"; // TODO: extension filter is not working
 
-            if (openFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() == true)
             {
-                fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
-                path = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
+                fileName = System.IO.Path.GetFileName(saveFileDialog.FileName);
+                path = System.IO.Path.GetDirectoryName(saveFileDialog.FileName);
             }
 
             ApplicationCommands.SaveJsonObject(FullPath, content);
