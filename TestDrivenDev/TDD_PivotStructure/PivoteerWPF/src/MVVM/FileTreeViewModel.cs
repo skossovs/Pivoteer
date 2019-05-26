@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PivoteerWPF
+namespace PivoteerWPF.MVVM
 {
-    // TODO: rename this project representation
-    class Project
+    class FileTreeViewModel
     {
-        public string ExcelFileFullPath;
+        public FileTreeViewModel()
+        {
+
+        }
     }
 }

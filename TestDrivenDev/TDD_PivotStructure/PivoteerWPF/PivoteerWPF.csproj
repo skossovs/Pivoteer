@@ -60,8 +60,10 @@
     <Compile Include="src\Common\ApplicationCommands.cs" />
     <Compile Include="src\Common\DelegateCommand.cs" />
     <Compile Include="src\Common\ProjectFile.cs" />
+    <Compile Include="src\MVVM\TreeStructure.cs" />
+    <Compile Include="src\MVVM\FileTreeViewModel.cs" />
     <Compile Include="src\MVVM\ShellViewModel.cs" />
-    <Compile Include="src\Project.cs" />
+    <Compile Include="src\Data\Project.cs" />
     <Page Include="src\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
