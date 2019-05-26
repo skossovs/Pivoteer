@@ -8,9 +8,15 @@ namespace PivoteerWPF.MVVM
 {
     class FileTreeViewModel
     {
+
         public FileTreeViewModel()
         {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<FileCommandMessage>(this, ReceiveFileCommand);
+        }
 
+        private void ReceiveFileCommand(FileCommandMessage obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

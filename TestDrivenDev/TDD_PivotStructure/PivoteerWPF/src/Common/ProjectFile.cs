@@ -8,12 +8,10 @@ using System.Windows;
 namespace PivoteerWPF.Common
 {
     // TODO: Rename this entity
-    class ProjectFile<T>
-        where T: new()
+    class ProjectFile
     {
         private string path;
         private string fileName;
-        private T      content;
         private bool   firstTime;
 
         public string FullPath
@@ -24,8 +22,6 @@ namespace PivoteerWPF.Common
             }
         }
 
-        public T Content { get { return content; } }
-
         public ProjectFile()
         {
             path = System.IO.Directory.GetCurrentDirectory();
@@ -35,7 +31,6 @@ namespace PivoteerWPF.Common
 
         public void CreateNew()
         {
-            content = new T();
             if(firstTime)
             {
                 var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
@@ -52,7 +47,6 @@ namespace PivoteerWPF.Common
                     firstTime = false;
                 }
             }
-            ApplicationCommands.SaveJsonObject(FullPath, content); 
         }
         public void Load()
         {
@@ -66,8 +60,6 @@ namespace PivoteerWPF.Common
                 fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
                 path = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
             }
-            // TODO: too complicated, get rid of types.
-            content = (T) ApplicationCommands.ReadJsonObject(FullPath, typeof(T));
         }
         public void Save()
         {
@@ -81,8 +73,6 @@ namespace PivoteerWPF.Common
                 fileName = System.IO.Path.GetFileName(saveFileDialog.FileName);
                 path = System.IO.Path.GetDirectoryName(saveFileDialog.FileName);
             }
-
-            ApplicationCommands.SaveJsonObject(FullPath, content);
         }
     }
 }
