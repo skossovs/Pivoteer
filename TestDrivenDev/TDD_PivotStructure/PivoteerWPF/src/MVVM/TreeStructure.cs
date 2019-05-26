@@ -14,6 +14,11 @@ namespace PivoteerWPF.MVVM
 
     public class Group
     {
+        public Group()
+        {
+            SubGroups = new List<Group>();
+            Entries   = new List<Entry>();
+        }
         public int Key { get; set; }
         public string Name { get; set; }
 

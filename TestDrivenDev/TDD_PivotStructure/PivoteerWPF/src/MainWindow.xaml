@@ -41,7 +41,7 @@
                     <RowDefinition Height="400"/>
                 </Grid.RowDefinitions>
                 <TreeView Name ="tvFiles"  Grid.Row ="0" DataContext="{Binding Source={StaticResource FileTreeViewModel}}"
-                                                         ItemsSource="{Binding Source={StaticResource TreeGroupModel}}">
+                                                         ItemsSource="{Binding TreeData}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type vm:Group}" ItemsSource="{Binding Items}">
                             <TextBlock Text="{Binding Path=Name}" />

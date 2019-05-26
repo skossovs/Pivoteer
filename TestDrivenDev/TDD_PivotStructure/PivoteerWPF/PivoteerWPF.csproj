@@ -76,6 +76,7 @@
     <Compile Include="src\Common\DelegateCommand.cs" />
     <Compile Include="src\Common\ProjectFile.cs" />
     <Compile Include="src\MVVM\FileCommandMessage.cs" />
+    <Compile Include="src\MVVM\ProjectExtensions.cs" />
     <Compile Include="src\MVVM\TreeStructure.cs" />
     <Compile Include="src\MVVM\FileTreeViewModel.cs" />
     <Compile Include="src\MVVM\ShellViewModel.cs" />
