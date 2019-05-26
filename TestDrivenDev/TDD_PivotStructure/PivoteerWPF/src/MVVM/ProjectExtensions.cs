@@ -19,5 +19,13 @@ namespace PivoteerWPF.MVVM
 
             return group;
         }
+
+        public static Group ExcelSheetDataToGroup(this Data.SheetData excelSheetData)
+        {
+            var group = new Group() { Key = 0, Name = excelSheetData.SheetName };
+
+            return group;
+        }
+
     }
 }
