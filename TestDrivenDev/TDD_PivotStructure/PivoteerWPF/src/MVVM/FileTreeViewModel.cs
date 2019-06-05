@@ -59,12 +59,12 @@ namespace PivoteerWPF.MVVM
 
             var RootGroups = new List<Group>() { RootGroup };
 
-            _content?.ExcelFiles.ForEach(f =>
+            _content?.ExcelFiles?.ForEach(f =>
             {
                 var g = f.ExcelFileDataToGroup();
                 RootGroup.SubGroups.Add(g);
 
-                f?.Sheets.ForEach(s =>
+                f?.Sheets?.ForEach(s =>
                 {
                     g.Entries.Add(new Entry() { Name = s.SheetName });
                 });

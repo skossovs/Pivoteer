@@ -1,0 +1,22 @@
+﻿{
+  "ProjectDescription": "new test",
+  "ExcelFiles": [
+    {
+      "ExcelFileFullPath": "File1.xlsx",
+      "Sheets": [
+        {
+          "SheetName": "Sheet1",
+          "ClassName": "Transaction"
+        },
+        {
+          "SheetName": "Sheet2",
+          "ClassName": "PnL"
+        }
+      ]
+    },
+    {
+      "ExcelFileFullPath": "File2.xlsx",
+      "Sheets": []
+    }
+  ]
+}
