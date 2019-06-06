@@ -8,5 +8,9 @@ namespace PivoteerWPF.MVVM
 {
     class TabModel
     {
+        public TabModel()
+        {
+
+        }
     }
 }
