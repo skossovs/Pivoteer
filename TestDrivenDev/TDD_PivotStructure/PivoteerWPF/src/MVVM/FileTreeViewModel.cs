@@ -1,5 +1,6 @@
 ﻿using PivoteerWPF.Common;
 using PivoteerWPF.Data;
+using PivoteerWPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace PivoteerWPF.MVVM
                     TreeData = ConvertFromJsonToGroups();
                     break;
                 case "OPEN":
-                    _content = (Project) ApplicationCommands.ReadJsonObject(fileCommand.Path, typeof(Project)); // TODO: by default there is always a project. not right
+                    _content = (Project) ApplicationCommands.ReadJsonObject(fileCommand.Path, typeof(Project));
                     if(_content != null)
                         TreeData = ConvertFromJsonToGroups();
                     break;
@@ -69,6 +70,8 @@ namespace PivoteerWPF.MVVM
                     g.Entries.Add(new Entry() { Name = s.SheetName });
                 });
             });
+
+            RootGroup.PopulateKeysAndPaths();
 
             return RootGroups;
         }

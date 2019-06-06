@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PivoteerWPF.MVVM.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,13 @@ namespace PivoteerWPF.MVVM
     {
         public TabModel()
         {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewSelectionMessage>(this, ReceiveTreeViewSelectionCommand);
+        }
 
+        private void ReceiveTreeViewSelectionCommand(TreeViewSelectionMessage obj)
+        {
+            // TODO: display certain Tab
+            throw new NotImplementedException();
         }
     }
 }

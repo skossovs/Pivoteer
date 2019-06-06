@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PivoteerWPF.Data;
 using System.ComponentModel;
+using PivoteerWPF.MVVM.Messages;
 
 namespace PivoteerWPF.MVVM
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PivoteerWPF.MVVM
+namespace PivoteerWPF.MVVM.Messages
 {
     class FileCommandMessage : MessageBase
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PivoteerWPF.MVVM.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,32 @@ namespace PivoteerWPF.MVVM.Behaviors
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             this.SelectedItem = e.NewValue;
+
+            var treeNodeType = Data.TreeNodeType.Root;
+            string name = string.Empty;
+            string path = string.Empty;
+            string delimeter = string.Empty + (char)0x00;
+            int key = -1;
+
+            if (e.NewValue.GetType() == typeof(Group))
+            {
+                var group = e.NewValue as Group;
+                if(group.Path.Contains(delimeter))  // root node has no delimeter
+                    treeNodeType = Data.TreeNodeType.ExcelFile;
+                name = group.Name;
+                path = group.Path;
+                key = group.Key;
+            }
+            else if (e.NewValue.GetType() == typeof(Entry))
+            {
+                treeNodeType = Data.TreeNodeType.ExcelSheet;
+                var entry = e.NewValue as Entry;
+                name = entry.Name;
+                path = entry.Path;
+                key = entry.Key;
+            }
+
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewSelectionMessage(key, name, treeNodeType, path));
         }
     }
 }
