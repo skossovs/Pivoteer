@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace PivoteerWPF.MVVM.Messages
 {
-    class TreeViewSelectionMessage : MessageBase
+    class TreeViewPopulatedMessage : MessageBase
     {
-        public int Key { get; set; }
-        public TreeViewSelectionMessage(int key)
+        public IList<TreeNode> TreeNodes { get; set; }
+        public TreeViewPopulatedMessage(IList<TreeNode> treeNodes)
         {
-            Key = key;
+            TreeNodes = treeNodes;
         }
     }
 }

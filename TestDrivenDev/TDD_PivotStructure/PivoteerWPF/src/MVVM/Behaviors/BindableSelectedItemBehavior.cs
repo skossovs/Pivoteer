@@ -79,7 +79,7 @@ namespace PivoteerWPF.MVVM.Behaviors
                 key = entry.Key;
             }
 
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewSelectionMessage(key, name, treeNodeType, path));
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewSelectionMessage(key));
         }
     }
 }

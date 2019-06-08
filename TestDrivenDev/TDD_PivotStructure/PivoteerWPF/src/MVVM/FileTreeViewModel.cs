@@ -50,28 +50,70 @@ namespace PivoteerWPF.MVVM
 
         public List<Group> ConvertFromJsonToGroups()
         {
+            // TODO: overall ugly
+            // TODO: not the best place to send the message. Decouple
+            List<TreeNode> lstNodes = new List<TreeNode>();
+
             // Name
             var RootGroup = new Group() {
-                Key = 0,
-                Name = _content?.ProjectDescription,
+                Key  = _content.ProjectDescription.GetHashCode(),
+                Name = _content.ProjectDescription,
+                Path = _content.ProjectDescription,
                 SubGroups = new List<Group>(),
                 Entries = new List<Entry>()
             };
 
+            var properties = new Dictionary<string, string>();
+            properties.Add("ProjectName", _content.ProjectDescription);
+
+            lstNodes.Add(new TreeNode()
+            {
+                Type = TreeNodeType.Root,
+                Key = _content.ProjectDescription.GetHashCode(),
+                Properties = properties
+            });
+
             var RootGroups = new List<Group>() { RootGroup };
+            var parentPath = RootGroup.Path;
 
             _content?.ExcelFiles?.ForEach(f =>
             {
-                var g = f.ExcelFileDataToGroup();
+                var g = f.ExcelFileDataToGroup(parentPath);
                 RootGroup.SubGroups.Add(g);
+
+                properties = new Dictionary<string, string>();
+                properties.Add("ExcelFilePath", f.ExcelFileFullPath);
+
+                lstNodes.Add(new TreeNode()
+                {
+                    Type = TreeNodeType.ExcelFile,
+                    Key = g.Key,
+                    Properties = properties
+                });
 
                 f?.Sheets?.ForEach(s =>
                 {
-                    g.Entries.Add(new Entry() { Name = s.SheetName });
+                    g.Entries.Add(new Entry()
+                    {
+                        Name = s.SheetName,
+                        Path = g.Path + (char)0x00 + s.SheetName,
+                        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode()
+                    });
+
+                    properties = new Dictionary<string, string>();
+                    properties.Add("SheetName", s.SheetName);
+                    properties.Add("ClassName", s.ClassName);
+                    lstNodes.Add(new TreeNode()
+                    {
+                        Type = TreeNodeType.ExcelSheet,
+                        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode(),
+                        Properties = properties
+                    });
                 });
             });
 
-            RootGroup.PopulateKeysAndPaths();
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewPopulatedMessage(lstNodes));
+            //RootGroup.PopulateKeysAndPaths(); // TODO: remove
 
             return RootGroups;
         }
