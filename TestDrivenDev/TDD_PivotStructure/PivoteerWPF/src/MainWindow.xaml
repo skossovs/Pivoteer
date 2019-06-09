@@ -13,12 +13,18 @@
         <vm:ShellViewModel                x:Key="ShellViewModel"></vm:ShellViewModel>
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
         <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
-        <vm:TabModel                      x:Key="TabModel"></vm:TabModel>
+        <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
 
-        <DataTemplate x:Key="RootDataTemplate"     ></DataTemplate>
-        <DataTemplate x:Key="ExcelFileDataTemplate"></DataTemplate>
-        <DataTemplate x:Key="SheetDataTemplate"    ></DataTemplate>
+        <DataTemplate x:Key="RootDataTemplate">
+            <TextBlock Text="ROOT"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="ExcelFileDataTemplate">
+            <TextBlock Text="EXCEL"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="SheetDataTemplate">
+            <TextBlock Text="SHEET"></TextBlock>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -62,8 +68,9 @@
                     </i:Interaction.Behaviors>
                 </TreeView>
                 <Grid     Name ="gridProperties" Grid.Row="1">
-                    <TabControl Name="tabDynamic" DataContext="{Binding Source={StaticResource TabModel}}"
-                                ItemTemplateSelector="{StaticResource myDataTemplateSelector}">
+                    <TabControl Name="tabDynamic" DataContext="{Binding Source={StaticResource TabItemsModel}}"
+                                ItemTemplateSelector="{StaticResource myDataTemplateSelector}"
+                                ItemsSource="{Binding TabItems}">
                     </TabControl>
                 </Grid>
             </Grid>

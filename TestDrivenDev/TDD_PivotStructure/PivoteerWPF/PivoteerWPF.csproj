@@ -83,7 +83,7 @@
     <Compile Include="src\MVVM\Messages\TreeViewSelectionMessage.cs" />
     <Compile Include="src\MVVM\Messages\FileCommandMessage.cs" />
     <Compile Include="src\MVVM\ProjectExtensions.cs" />
-    <Compile Include="src\MVVM\TabModel.cs" />
+    <Compile Include="src\MVVM\TabItemsModel.cs" />
     <Compile Include="src\MVVM\TreeNodesDataTemplateSelector.cs" />
     <Compile Include="src\MVVM\TreeStructure.cs" />
     <Compile Include="src\MVVM\FileTreeViewModel.cs" />
