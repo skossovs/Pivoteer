@@ -1,6 +1,7 @@
 ﻿using PivoteerWPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,8 @@ using System.Windows.Controls;
 
 namespace PivoteerWPF.MVVM
 {
-    class TabItemsModel : INotifyPropertyChanged
+    class TabItemsModel : ObservableCollection<TabItem>
     {
-        List<TabItem> _tabItems;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,21 +24,19 @@ namespace PivoteerWPF.MVVM
 
         public TabItemsModel()
         {
-            _tabItems = new List<TabItem>();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewSelectionMessage>(this, ReceiveTreeViewSelectionCommand);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewPopulatedMessage>(this, ReceiveTreeViewPopulatedCommand);
         }
         // TODO: implement Tab addition/deletion
         private void ReceiveTreeViewPopulatedCommand(TreeViewPopulatedMessage tvPopulatedMessage)
         {
-            _tabItems.Clear();
+            Clear();
             foreach(var t in tvPopulatedMessage.TreeNodes)
             {
-                _tabItems.Add(new TabItem());
+                var ti = new TabItem();
+                Add(ti);
                 // Provide class model for all the tabs
             }
-            OnPropertyChanged("TabItems");
-
         }
 
 
@@ -46,14 +44,6 @@ namespace PivoteerWPF.MVVM
         {
             // TODO: display certain Tab
             throw new NotImplementedException();
-        }
-
-        public IList<TabItem> TabItems
-        {
-            get
-            {
-                return _tabItems;
-            }
         }
     }
 }

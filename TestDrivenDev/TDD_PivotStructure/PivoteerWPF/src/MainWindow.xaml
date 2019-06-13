@@ -70,7 +70,7 @@
                 <Grid     Name ="gridProperties" Grid.Row="1">
                     <TabControl Name="tabDynamic" DataContext="{Binding Source={StaticResource TabItemsModel}}"
                                 ItemTemplateSelector="{StaticResource myDataTemplateSelector}"
-                                ItemsSource="{Binding TabItems}">
+                                ItemsSource="{Binding}">
                     </TabControl>
                 </Grid>
             </Grid>

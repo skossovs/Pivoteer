@@ -15,7 +15,6 @@ namespace PivoteerWPF.MVVM
         private const string TEMPLATE_KEY_FILE  = "ExcelFileDataTemplate";
         private const string TEMPLATE_KEY_SHEET = "SheetDataTemplate";
 
-
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
