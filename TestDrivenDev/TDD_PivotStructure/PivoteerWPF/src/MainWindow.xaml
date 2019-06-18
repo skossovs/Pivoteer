@@ -67,12 +67,10 @@
                         <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </TreeView>
-                <Grid     Name ="gridProperties" Grid.Row="1">
-                    <TabControl Name="tabDynamic" DataContext="{Binding Source={StaticResource TabItemsModel}}"
-                                ItemTemplateSelector="{StaticResource myDataTemplateSelector}"
-                                ItemsSource="{Binding}">
-                    </TabControl>
-                </Grid>
+                <ContentControl Grid.Row="1" 
+                                ContentTemplateSelector = "{StaticResource myDataTemplateSelector}"
+                                DataContext             = "{Binding Source={StaticResource TabItemsModel}}"
+                                Content                 = "{Binding SelectedNode}"/>
             </Grid>
             <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0"/>
         </Grid>

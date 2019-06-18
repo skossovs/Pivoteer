@@ -1,4 +1,5 @@
-﻿using PivoteerWPF.MVVM.Messages;
+﻿using PivoteerWPF.Data;
+using PivoteerWPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +11,10 @@ using System.Windows.Controls;
 
 namespace PivoteerWPF.MVVM
 {
-    class TabItemsModel : ObservableCollection<TabItem>
+    class TabItemsModel : INotifyPropertyChanged
     {
-
+        IList<TreeNode> _treeNodes;
+        TreeNode        _treeNode;
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -20,7 +22,6 @@ namespace PivoteerWPF.MVVM
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
 
         public TabItemsModel()
         {
@@ -30,20 +31,40 @@ namespace PivoteerWPF.MVVM
         // TODO: implement Tab addition/deletion
         private void ReceiveTreeViewPopulatedCommand(TreeViewPopulatedMessage tvPopulatedMessage)
         {
-            Clear();
-            foreach(var t in tvPopulatedMessage.TreeNodes)
+            TreeNodes = tvPopulatedMessage.TreeNodes;
+        }
+
+
+        private void ReceiveTreeViewSelectionCommand(TreeViewSelectionMessage tvSelectedMessage)
+        {
+            SelectedNode = TreeNodes.First(t => t.Key == tvSelectedMessage.Key);
+        }
+
+        public IList<TreeNode> TreeNodes
+        {
+            get
             {
-                var ti = new TabItem();
-                Add(ti);
-                // Provide class model for all the tabs
+                return _treeNodes;
+            }
+            set
+            {
+                _treeNodes = value;
+                OnPropertyChanged("TreeNodes");
             }
         }
 
-
-        private void ReceiveTreeViewSelectionCommand(TreeViewSelectionMessage obj)
+        public TreeNode SelectedNode
         {
-            // TODO: display certain Tab
-            throw new NotImplementedException();
+            get
+            {
+                return _treeNode;
+            }
+            set
+            {
+                _treeNode = value;
+                OnPropertyChanged("SelectedNode");
+            }
         }
+
     }
 }
