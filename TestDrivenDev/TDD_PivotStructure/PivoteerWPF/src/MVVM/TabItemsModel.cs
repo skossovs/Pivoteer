@@ -33,8 +33,6 @@ namespace PivoteerWPF.MVVM
         {
             TreeNodes = tvPopulatedMessage.TreeNodes;
         }
-
-
         private void ReceiveTreeViewSelectionCommand(TreeViewSelectionMessage tvSelectedMessage)
         {
             SelectedNode = TreeNodes.First(t => t.Key == tvSelectedMessage.Key);
@@ -65,6 +63,5 @@ namespace PivoteerWPF.MVVM
                 OnPropertyChanged("SelectedNode");
             }
         }
-
     }
 }

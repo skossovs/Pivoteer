@@ -19,7 +19,7 @@ namespace PivoteerWPF.MVVM
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
-            // TODO: switch between templates here
+
             if(element != null && item != null)
             {
                 var tn = item as TreeNode;
