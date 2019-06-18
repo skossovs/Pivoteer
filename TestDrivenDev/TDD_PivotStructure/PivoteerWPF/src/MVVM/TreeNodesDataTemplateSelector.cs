@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PivoteerWPF.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,21 @@ namespace PivoteerWPF.MVVM
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
-            // TODO: switch between templates here
+
             if(element != null && item != null)
             {
-                return element.TryFindResource(TEMPLATE_KEY_ROOT) as DataTemplate;
+                var tn = item as TreeNode;
+                switch(tn.Type)
+                {
+                    case TreeNodeType.Root:
+                        return element.TryFindResource(TEMPLATE_KEY_ROOT) as DataTemplate;
+                    case TreeNodeType.ExcelFile:
+                        return element.TryFindResource(TEMPLATE_KEY_FILE) as DataTemplate;
+                    case TreeNodeType.ExcelSheet:
+                        return element.TryFindResource(TEMPLATE_KEY_SHEET) as DataTemplate;
+                    case TreeNodeType.Invalid:
+                        throw new NotImplementedException("TODO: Invalid case must be implemented!!");
+                }
             }
 
             return null;

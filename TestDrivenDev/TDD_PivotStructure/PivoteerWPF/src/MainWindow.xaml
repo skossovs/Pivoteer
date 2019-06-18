@@ -17,13 +17,44 @@
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
 
         <DataTemplate x:Key="RootDataTemplate">
-            <TextBlock Text="ROOT"></TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Add File" Grid.Column="0"></TextBlock>
+                <Button    Content="..."   Grid.Column="1"></Button>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ExcelFileDataTemplate">
-            <TextBlock Text="EXCEL"></TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="File Path:" Grid.Column="0"></TextBlock>
+                <TextBlock Text="\\\\\\\\\\\\\\\\\\\"        Grid.Column="1"></TextBlock>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="SheetDataTemplate">
-            <TextBlock Text="SHEET"></TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Choose class" Grid.Row="0" Grid.Column="0"></TextBlock>
+                <ComboBox  Grid.Row="0" Grid.Column="1"></ComboBox>
+            </Grid>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -67,12 +98,10 @@
                         <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
                     </i:Interaction.Behaviors>
                 </TreeView>
-                <Grid     Name ="gridProperties" Grid.Row="1">
-                    <TabControl Name="tabDynamic" DataContext="{Binding Source={StaticResource TabItemsModel}}"
-                                ItemTemplateSelector="{StaticResource myDataTemplateSelector}"
-                                ItemsSource="{Binding}">
-                    </TabControl>
-                </Grid>
+                <ContentControl Grid.Row="1" 
+                                ContentTemplateSelector = "{StaticResource myDataTemplateSelector}"
+                                DataContext             = "{Binding Source={StaticResource TabItemsModel}}"
+                                Content                 = "{Binding SelectedNode}"/>
             </Grid>
             <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0"/>
         </Grid>
