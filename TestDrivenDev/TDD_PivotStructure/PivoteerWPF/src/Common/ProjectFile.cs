@@ -24,8 +24,8 @@ namespace PivoteerWPF.Common
 
         public ProjectFile()
         {
-            path = System.IO.Directory.GetCurrentDirectory();
-            fileName = "new test.json";
+            path = string.Empty;
+            fileName = string.Empty;
             firstTime = true;
         }
 
@@ -33,6 +33,9 @@ namespace PivoteerWPF.Common
         {
             if(firstTime)
             {
+                path = System.IO.Directory.GetCurrentDirectory();
+                fileName = "new test.json";
+
                 var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
                 saveFileDialog.InitialDirectory = path;
@@ -48,8 +51,9 @@ namespace PivoteerWPF.Common
                 }
             }
         }
-        public void Load()
+        public bool Load()
         {
+            bool isCancelled = false;
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.InitialDirectory = path;
             openFileDialog.AddExtension = true;
@@ -60,9 +64,14 @@ namespace PivoteerWPF.Common
                 fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
                 path = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
             }
+            else
+                isCancelled = true;
+
+            return isCancelled;
         }
-        public void Save()
+        public bool Save()
         {
+            bool isCancelled = false;
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.InitialDirectory = path;
             saveFileDialog.AddExtension = true;
@@ -73,6 +82,10 @@ namespace PivoteerWPF.Common
                 fileName = System.IO.Path.GetFileName(saveFileDialog.FileName);
                 path = System.IO.Path.GetDirectoryName(saveFileDialog.FileName);
             }
+            else
+                isCancelled = true;
+
+            return isCancelled;
         }
     }
 }

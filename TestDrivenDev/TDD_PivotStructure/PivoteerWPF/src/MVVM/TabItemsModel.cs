@@ -63,5 +63,12 @@ namespace PivoteerWPF.MVVM
                 OnPropertyChanged("SelectedNode");
             }
         }
+        public string FileFullPath
+        {
+            get
+            {
+                return _treeNode.Properties["ExcelFilePath"]; // TODO: magic constants must be in one place
+            }
+        }
     }
 }

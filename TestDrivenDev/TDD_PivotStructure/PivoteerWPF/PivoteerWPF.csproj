@@ -75,6 +75,7 @@
     <Compile Include="src\Common\ApplicationCommands.cs" />
     <Compile Include="src\Common\DelegateCommand.cs" />
     <Compile Include="src\Common\ProjectFile.cs" />
+    <Compile Include="src\Converters\FullPathToFileNameConverter.cs" />
     <Compile Include="src\Data\Enums.cs" />
     <Compile Include="src\Data\ProjectOnTreeView.cs" />
     <Compile Include="src\MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
@@ -122,6 +123,12 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="ProjectSamples\Excel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectSamples\OptionPricing.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectSamples\Stocks.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">

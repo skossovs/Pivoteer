@@ -2,21 +2,31 @@
   "ProjectDescription": "TheOnlyExcel",
   "ExcelFiles": [
     {
-      "ExcelFileFullPath": "File1.xlsx",
+      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Stocks.xlsx",
       "Sheets": [
         {
-          "SheetName": "Sheet1",
-          "ClassName": "Transaction"
+          "SheetName": "AMD",
+          "ClassName": "SpotPrice"
         },
         {
-          "SheetName": "Sheet2",
-          "ClassName": "PnL"
+          "SheetName": "MSFT",
+          "ClassName": "SpotPrice"
         }
       ]
     },
     {
-      "ExcelFileFullPath": "File2.xlsx",
-      "Sheets": []
+      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\OptionPricing.xlsx",
+      "Sheets": [
+        {
+          "SheetName": "AMD",
+          "ClassName": "OptionPrice"
+        },
+        {
+          "SheetName": "MSFT",
+          "ClassName": "OptionPrice"
+        }
+      ]
+
     }
   ]
 }

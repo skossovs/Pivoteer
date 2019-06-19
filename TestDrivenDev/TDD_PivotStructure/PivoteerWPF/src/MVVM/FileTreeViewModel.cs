@@ -113,8 +113,6 @@ namespace PivoteerWPF.MVVM
             });
 
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewPopulatedMessage(lstNodes));
-            //RootGroup.PopulateKeysAndPaths(); // TODO: remove
-
             return RootGroups;
         }
 
