@@ -10,6 +10,7 @@ namespace PivoteerWPF.MVVM
     {
         public int Key { get; set; }
         public string Name { get; set; }
+        public string Path { get; set; }
     }
 
     public class Group
@@ -21,6 +22,7 @@ namespace PivoteerWPF.MVVM
         }
         public int Key { get; set; }
         public string Name { get; set; }
+        public string Path { get; set; }
 
         public IList<Group> SubGroups { get; set; }
         public IList<Entry> Entries { get; set; }

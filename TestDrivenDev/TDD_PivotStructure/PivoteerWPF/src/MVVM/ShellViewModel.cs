@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PivoteerWPF.Data;
 using System.ComponentModel;
+using PivoteerWPF.MVVM.Messages;
 
 namespace PivoteerWPF.MVVM
 {
@@ -32,6 +33,8 @@ namespace PivoteerWPF.MVVM
             _fileMenuCommand = new DelegateCommand<string>(
                 (s) =>
                 {
+                    bool isCancelled = false;
+
                     switch (s)
                     {
                         case C_EXIT:
@@ -42,12 +45,14 @@ namespace PivoteerWPF.MVVM
                             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new FileCommandMessage(C_NEW, projectFile.FullPath));
                             break;
                         case C_OPEN:
-                            projectFile.Load();
-                            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new FileCommandMessage(C_OPEN, projectFile.FullPath));
+                            isCancelled = projectFile.Load();
+                            if(!isCancelled)
+                                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new FileCommandMessage(C_OPEN, projectFile.FullPath));
                             break;
                         case C_SAVE:
-                            projectFile.Save();
-                            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new FileCommandMessage(C_SAVE, projectFile.FullPath));
+                            isCancelled = projectFile.Save();
+                            if(!isCancelled)
+                                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new FileCommandMessage(C_SAVE, projectFile.FullPath));
                             break;
                         default:
                             throw new Exception("Unrecognized command");

@@ -1,5 +1,6 @@
 ﻿using PivoteerWPF.Common;
 using PivoteerWPF.Data;
+using PivoteerWPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,25 @@ namespace PivoteerWPF.MVVM
         public FileTreeViewModel()
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<FileCommandMessage>(this, ReceiveFileCommand);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ExcelFileCommandMessage>(this, ReceiveExcelFileCommand);
+        }
+
+        private void ReceiveExcelFileCommand(ExcelFileCommandMessage fileCommand)
+        {
+            switch(fileCommand.Command)
+            {
+                case "ADD":
+                    var sheets = ApplicationCommands.RetreiveSheets(fileCommand.FullPath);
+                    // Add to Project
+                    _content.ExcelFiles.Add(new ExcelFileData()
+                    {
+                        ExcelFileFullPath = fileCommand.FullPath,
+                        Sheets = sheets.Select(s => new SheetData() {SheetName = s, ClassName = string.Empty }).ToList()
+                    });
+                    // Update TreeView
+                    TreeData = ConvertFromProjectToGroups();
+                    break;
+            }
         }
 
         private void ReceiveFileCommand(FileCommandMessage fileCommand)
@@ -32,12 +52,12 @@ namespace PivoteerWPF.MVVM
                 case "NEW":
                     _content = new Project();
                     ApplicationCommands.SaveJsonObject(fileCommand.Path, _content);
-                    TreeData = ConvertFromJsonToGroups();
+                    TreeData = ConvertFromProjectToGroups();
                     break;
                 case "OPEN":
-                    _content = (Project) ApplicationCommands.ReadJsonObject(fileCommand.Path, typeof(Project)); // TODO: by default there is always a project. not right
+                    _content = (Project) ApplicationCommands.ReadJsonObject(fileCommand.Path, typeof(Project));
                     if(_content != null)
-                        TreeData = ConvertFromJsonToGroups();
+                        TreeData = ConvertFromProjectToGroups();
                     break;
                 case "SAVE":
                     ApplicationCommands.SaveJsonObject(fileCommand.Path, _content);
@@ -47,29 +67,71 @@ namespace PivoteerWPF.MVVM
             }
         }
 
-        public List<Group> ConvertFromJsonToGroups()
+        public List<Group> ConvertFromProjectToGroups()
         {
+            // TODO: overall ugly
+            // TODO: not the best place to send the message. Decouple
+            List<TreeNode> lstNodes = new List<TreeNode>();
+
             // Name
             var RootGroup = new Group() {
-                Key = 0,
-                Name = _content?.ProjectDescription,
+                Key  = _content.ProjectDescription.GetHashCode(),
+                Name = _content.ProjectDescription,
+                Path = _content.ProjectDescription,
                 SubGroups = new List<Group>(),
                 Entries = new List<Entry>()
             };
 
-            var RootGroups = new List<Group>() { RootGroup };
+            var properties = new Dictionary<string, string>();
+            properties.Add("ProjectName", _content.ProjectDescription);
 
-            _content?.ExcelFiles.ForEach(f =>
+            lstNodes.Add(new TreeNode()
             {
-                var g = f.ExcelFileDataToGroup();
+                Type = TreeNodeType.Root,
+                Key = _content.ProjectDescription.GetHashCode(),
+                Properties = properties
+            });
+
+            var RootGroups = new List<Group>() { RootGroup };
+            var parentPath = RootGroup.Path;
+
+            _content?.ExcelFiles?.ForEach(f =>
+            {
+                var g = f.ExcelFileDataToGroup(parentPath);
                 RootGroup.SubGroups.Add(g);
 
-                f?.Sheets.ForEach(s =>
+                properties = new Dictionary<string, string>();
+                properties.Add("ExcelFilePath", f.ExcelFileFullPath);
+
+                lstNodes.Add(new TreeNode()
                 {
-                    g.Entries.Add(new Entry() { Name = s.SheetName });
+                    Type = TreeNodeType.ExcelFile,
+                    Key = g.Key,
+                    Properties = properties
+                });
+
+                f?.Sheets?.ForEach(s =>
+                {
+                    g.Entries.Add(new Entry()
+                    {
+                        Name = s.SheetName,
+                        Path = g.Path + (char)0x00 + s.SheetName,
+                        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode()
+                    });
+
+                    properties = new Dictionary<string, string>();
+                    properties.Add("SheetName", s.SheetName);
+                    properties.Add("ClassName", s.ClassName);
+                    lstNodes.Add(new TreeNode()
+                    {
+                        Type = TreeNodeType.ExcelSheet,
+                        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode(),
+                        Properties = properties
+                    });
                 });
             });
 
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewPopulatedMessage(lstNodes));
             return RootGroups;
         }
 
