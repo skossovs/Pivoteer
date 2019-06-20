@@ -32,8 +32,15 @@ namespace PivoteerWPF.MVVM
             switch(fileCommand.Command)
             {
                 case "ADD":
-                    // TODO: Add to Project
-                    // TODO: Add to TreeView
+                    var sheets = ApplicationCommands.RetreiveSheets(fileCommand.FullPath);
+                    // Add to Project
+                    _content.ExcelFiles.Add(new ExcelFileData()
+                    {
+                        ExcelFileFullPath = fileCommand.FullPath,
+                        Sheets = sheets.Select(s => new SheetData() {SheetName = s, ClassName = string.Empty }).ToList()
+                    });
+                    // Update TreeView
+                    TreeData = ConvertFromProjectToGroups();
                     break;
             }
         }
@@ -45,12 +52,12 @@ namespace PivoteerWPF.MVVM
                 case "NEW":
                     _content = new Project();
                     ApplicationCommands.SaveJsonObject(fileCommand.Path, _content);
-                    TreeData = ConvertFromJsonToGroups();
+                    TreeData = ConvertFromProjectToGroups();
                     break;
                 case "OPEN":
                     _content = (Project) ApplicationCommands.ReadJsonObject(fileCommand.Path, typeof(Project));
                     if(_content != null)
-                        TreeData = ConvertFromJsonToGroups();
+                        TreeData = ConvertFromProjectToGroups();
                     break;
                 case "SAVE":
                     ApplicationCommands.SaveJsonObject(fileCommand.Path, _content);
@@ -60,7 +67,7 @@ namespace PivoteerWPF.MVVM
             }
         }
 
-        public List<Group> ConvertFromJsonToGroups()
+        public List<Group> ConvertFromProjectToGroups()
         {
             // TODO: overall ugly
             // TODO: not the best place to send the message. Decouple
