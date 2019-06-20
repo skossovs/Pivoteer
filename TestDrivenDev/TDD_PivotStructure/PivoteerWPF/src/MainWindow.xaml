@@ -75,8 +75,16 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button    Content="Delete"     Grid.Column="0" Grid.Row="0"></Button>
+                        <Button    Content="Delete"                   Grid.Column="0"></Button>
+                        <Button                                       Grid.Column="1">
+                            <TextBlock>Run</TextBlock>
+                        </Button>
+                        <Button                                       Grid.Column="2">
+                            <TextBlock>Verify</TextBlock>
+                        </Button>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -84,16 +92,39 @@
         <DataTemplate x:Key="SheetDataTemplate">
             <Grid DataContext="{Binding Source={StaticResource TabItemsModel}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Choose class" Grid.Row="0" Grid.Column="0"></TextBlock>
-                <ComboBox  ItemsSource="{Binding PivotClasses}"
-                    Grid.Row="0" Grid.Column="1"></ComboBox>
+                <GroupBox Header="Properties"                           Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Choose class"                  Grid.Column="0"></TextBlock>
+                        <ComboBox  ItemsSource="{Binding PivotClasses}" Grid.Column="1"></ComboBox>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Commands"                             Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button    Grid.Column="0">
+                            <TextBlock>Run</TextBlock>
+                        </Button>
+                        <Button    Grid.Column="1">
+                            <TextBlock>Verify</TextBlock>
+                        </Button>
+                    </Grid>
+                </GroupBox>
             </Grid>
         </DataTemplate>
     </Window.Resources>
