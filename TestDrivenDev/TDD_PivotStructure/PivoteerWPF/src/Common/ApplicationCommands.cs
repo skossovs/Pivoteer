@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ClosedXML.Excel;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,34 @@ namespace PivoteerWPF.Common
                 serializer.Serialize(writer, obj);
             }
 
+        }
+
+        public static IEnumerable<string> RetreiveSheets(string fullPath)
+        {
+            IEnumerable<string> result = null;
+            using (var excelWorkbook = new XLWorkbook(fullPath))
+            {
+                result = excelWorkbook.Worksheets.Select(s => s.Name);
+            }
+            return result;
+        }
+
+        public static Tuple<bool, string> RunOpenFileDialog(string extension, string initialPath)
+        {
+            bool isCancelled = false;
+            string fileNameFullPath = string.Empty;
+
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.InitialDirectory = initialPath;
+            openFileDialog.AddExtension = true;
+            openFileDialog.DefaultExt = extension;
+
+            if (openFileDialog.ShowDialog() == true)
+                fileNameFullPath = openFileDialog.FileName;
+            else
+                isCancelled = true;
+
+            return new Tuple<bool, string>(isCancelled, fileNameFullPath);
         }
     }
 }

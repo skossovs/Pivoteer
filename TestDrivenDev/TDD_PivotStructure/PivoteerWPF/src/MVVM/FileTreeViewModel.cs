@@ -24,6 +24,18 @@ namespace PivoteerWPF.MVVM
         public FileTreeViewModel()
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<FileCommandMessage>(this, ReceiveFileCommand);
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ExcelFileCommandMessage>(this, ReceiveExcelFileCommand);
+        }
+
+        private void ReceiveExcelFileCommand(ExcelFileCommandMessage fileCommand)
+        {
+            switch(fileCommand.Command)
+            {
+                case "ADD":
+                    // TODO: Add to Project
+                    // TODO: Add to TreeView
+                    break;
+            }
         }
 
         private void ReceiveFileCommand(FileCommandMessage fileCommand)

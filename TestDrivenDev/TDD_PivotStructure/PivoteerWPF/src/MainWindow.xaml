@@ -20,7 +20,7 @@
         <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
 
         <DataTemplate x:Key="RootDataTemplate">
-            <Grid>
+            <Grid DataContext="{Binding Source={StaticResource TabItemsModel}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
@@ -29,7 +29,13 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Add File" Grid.Column="0"></TextBlock>
-                <Button    Content="..."   Grid.Column="1"></Button>
+                <Button    Content="..."   Grid.Column="1">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding AddExcelFileCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ExcelFileDataTemplate">

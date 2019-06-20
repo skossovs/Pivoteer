@@ -1,4 +1,5 @@
-﻿using PivoteerWPF.Data;
+﻿using PivoteerWPF.Common;
+using PivoteerWPF.Data;
 using PivoteerWPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace PivoteerWPF.MVVM
     {
         IList<TreeNode> _treeNodes;
         TreeNode        _treeNode;
+        private readonly DelegateCommand<string> _addExcelFileCommand;
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -27,6 +30,8 @@ namespace PivoteerWPF.MVVM
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewSelectionMessage>(this, ReceiveTreeViewSelectionCommand);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewPopulatedMessage>(this, ReceiveTreeViewPopulatedCommand);
+
+            _addExcelFileCommand = new DelegateCommand<string>(AddExcel);
         }
         // TODO: implement Tab addition/deletion
         private void ReceiveTreeViewPopulatedCommand(TreeViewPopulatedMessage tvPopulatedMessage)
@@ -70,5 +75,26 @@ namespace PivoteerWPF.MVVM
                 return _treeNode.Properties["ExcelFilePath"]; // TODO: magic constants must be in one place
             }
         }
+
+        public DelegateCommand<string> AddExcelFileCommand
+        {
+            get
+            {
+                return _addExcelFileCommand;
+            }
+        }
+
+        // TODO: AddExcel
+        private void AddExcel(string _)
+        {
+            var t = ApplicationCommands.RunOpenFileDialog(".xlsx", System.IO.Directory.GetCurrentDirectory());
+            if(!t.Item1)
+            {
+                // Send message back to TreeView
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ExcelFileCommandMessage(_treeNode.Key, "ADD" ,t.Item2)); // TODO: generic constant need to be in ENUM
+            }
+        }
+
+
     }
 }
