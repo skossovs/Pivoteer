@@ -84,7 +84,14 @@ namespace PivoteerWPF.MVVM
             }
         }
 
-        // TODO: AddExcel
+        public IEnumerable<string> PivotClasses
+        {
+            get
+            {
+                return ApplicationCommands.ExtractPivotClasses();
+            }
+        }
+
         private void AddExcel(string _)
         {
             var t = ApplicationCommands.RunOpenFileDialog(".xlsx", System.IO.Directory.GetCurrentDirectory());

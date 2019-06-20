@@ -103,6 +103,8 @@
     <Compile Include="src\MVVM\FileTreeViewModel.cs" />
     <Compile Include="src\MVVM\ShellViewModel.cs" />
     <Compile Include="src\Data\Project.cs" />
+    <Compile Include="src\PivotClasses\Option.cs" />
+    <Compile Include="src\PivotClasses\Stock.cs" />
     <Page Include="src\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

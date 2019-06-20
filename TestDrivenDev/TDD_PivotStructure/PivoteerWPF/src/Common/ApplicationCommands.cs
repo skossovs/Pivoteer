@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +44,6 @@ namespace PivoteerWPF.Common
             {
                 serializer.Serialize(writer, obj);
             }
-
         }
 
         public static IEnumerable<string> RetreiveSheets(string fullPath)
@@ -72,6 +72,21 @@ namespace PivoteerWPF.Common
                 isCancelled = true;
 
             return new Tuple<bool, string>(isCancelled, fileNameFullPath);
+        }
+
+        public static IEnumerable<string> ExtractPivotClasses()
+        {
+            return GetTypesInNamespace(Assembly.GetExecutingAssembly(), "PivoteerWPF.PivotClasses")
+                .Select(t => t.Name)
+                .AsEnumerable<string>();
+        }
+
+        private static Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
+        {
+            return
+              assembly.GetTypes()
+                      .Where(t => String.Equals(t.Namespace, nameSpace, StringComparison.Ordinal))
+                      .ToArray();
         }
     }
 }
