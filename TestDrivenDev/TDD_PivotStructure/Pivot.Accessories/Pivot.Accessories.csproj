@@ -40,26 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregationTreeNode.cs" />
-    <Compile Include="Attributes\Aggregators.cs" />
-    <Compile Include="Attributes\Dimmension.cs" />
-    <Compile Include="Attributes\Values.cs" />
-    <Compile Include="Common\Clonning.cs" />
-    <Compile Include="Common\Composition.cs" />
-    <Compile Include="Extensions\ReflectionExtensions.cs" />
-    <Compile Include="Mapping\TypeWrapper.cs" />
-    <Compile Include="Mapping\ValueTypeWrapper.cs" />
-    <Compile Include="Mapping\XTypeWrapper.cs" />
-    <Compile Include="Mapping\YTypeWrapper.cs" />
-    <Compile Include="MatrixManipulator.cs" />
-    <Compile Include="DimmensionAggregator.cs" />
-    <Compile Include="PivotCoordinates\DictionaryGenerator.cs" />
-    <Compile Include="PivotCoordinates\DictionaryGeneratorHelper.cs" />
-    <Compile Include="PivotCoordinates\FieldList.cs" />
-    <Compile Include="PivotCoordinates\PivotGenerator.cs" />
+    <Compile Include="src\AggregationTreeNode.cs" />
+    <Compile Include="src\Attributes\Aggregators.cs" />
+    <Compile Include="src\Attributes\Dimmension.cs" />
+    <Compile Include="src\Attributes\Values.cs" />
+    <Compile Include="src\Common\Clonning.cs" />
+    <Compile Include="src\Common\Composition.cs" />
+    <Compile Include="src\Extensions\ReflectionExtensions.cs" />
+    <Compile Include="src\Mapping\TypeWrapper.cs" />
+    <Compile Include="src\Mapping\ValueTypeWrapper.cs" />
+    <Compile Include="src\Mapping\XTypeWrapper.cs" />
+    <Compile Include="src\Mapping\YTypeWrapper.cs" />
+    <Compile Include="src\MatrixManipulator.cs" />
+    <Compile Include="src\DimmensionAggregator.cs" />
+    <Compile Include="src\PivotCoordinates\DictionaryGenerator.cs" />
+    <Compile Include="src\PivotCoordinates\DictionaryGeneratorHelper.cs" />
+    <Compile Include="src\PivotCoordinates\FieldList.cs" />
+    <Compile Include="src\PivotCoordinates\PivotGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\AttributeReader.cs" />
-    <Compile Include="AggregationTreeGenerator.cs" />
+    <Compile Include="src\Reflection\AttributeReader.cs" />
+    <Compile Include="src\AggregationTreeGenerator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

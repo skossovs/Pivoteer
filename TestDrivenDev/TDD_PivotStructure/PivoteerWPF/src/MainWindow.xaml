@@ -1,0 +1,181 @@
+﻿<Window x:Class      ="PivoteerWPF.MainWindow"
+        xmlns        ="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x      ="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d      ="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc     ="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable ="d"
+        Title        ="MainWindow" Height="700" Width="800"
+        xmlns:local      ="clr-namespace:PivoteerWPF"
+        xmlns:vm         ="clr-namespace:PivoteerWPF.MVVM"
+        xmlns:behaviours ="clr-namespace:PivoteerWPF.MVVM.Behaviors"
+        xmlns:converters ="clr-namespace:PivoteerWPF.Converters"
+        xmlns:i          ="http://schemas.microsoft.com/expression/2010/interactivity">
+    <Window.Resources>
+        <vm:ShellViewModel                x:Key="ShellViewModel"></vm:ShellViewModel>
+        <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
+        <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
+        <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
+        <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
+
+        <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
+
+        <DataTemplate x:Key="RootDataTemplate">
+            <Grid DataContext="{Binding Source={StaticResource TabItemsModel}}">
+                <GroupBox Header="Commands">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button    Grid.Column="0">
+                            <TextBlock>Add Excel</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding AddExcelFileCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button    Grid.Column="1">
+                            <TextBlock>Verify</TextBlock>
+                        </Button>
+                        <Button    Grid.Column="2">
+                            <TextBlock>Run</TextBlock>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ExcelFileDataTemplate">
+            <Grid DataContext="{Binding Source={StaticResource TabItemsModel}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Properties" Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="File Path:"                 Grid.Column="0"></TextBlock>
+                        <TextBlock Text="{Binding FileFullPath}"     Grid.Column="1"></TextBlock>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Commands"   Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button    Content="Delete"                   Grid.Column="0"></Button>
+                        <Button                                       Grid.Column="1">
+                            <TextBlock>Run</TextBlock>
+                        </Button>
+                        <Button                                       Grid.Column="2">
+                            <TextBlock>Verify</TextBlock>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SheetDataTemplate">
+            <Grid DataContext="{Binding Source={StaticResource TabItemsModel}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Properties"                           Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Choose class"                  Grid.Column="0"></TextBlock>
+                        <ComboBox  ItemsSource="{Binding PivotClasses}" Grid.Column="1"></ComboBox>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Commands"                             Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button    Grid.Column="0">
+                            <TextBlock>Run</TextBlock>
+                        </Button>
+                        <Button    Grid.Column="1">
+                            <TextBlock>Verify</TextBlock>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File" DataContext="{Binding Source={StaticResource ShellViewModel}}">
+                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}" CommandParameter="NEW" />
+                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}" CommandParameter="OPEN"/>
+                    <MenuItem Header="_Save" Command="{Binding FileMenuCommand}" CommandParameter="SAVE"/>
+                    <Separator />
+                    <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}" CommandParameter="EXIT" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid Name="gridMain" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Name="gridConfiguration" Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <TreeView Name ="tvFiles"  Grid.Row ="0" DataContext="{Binding Source={StaticResource FileTreeViewModel}}"
+                                                         ItemsSource="{Binding TreeData}">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:Group}" ItemsSource="{Binding Items}">
+                            <TextBlock Text="{Binding Path=Name, Converter={StaticResource FullPathToFileName}}" />
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:Entry}" ItemsSource="{Binding Entry}">
+                            <TextBlock Text="{Binding Path=Name}" />
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                    <i:Interaction.Behaviors>
+                        <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </TreeView>
+                <ContentControl Grid.Row="1"
+                                ContentTemplateSelector = "{StaticResource myDataTemplateSelector}"
+                                DataContext             = "{Binding Source={StaticResource TabItemsModel}}"
+                                Content                 = "{Binding SelectedNode}"/>
+            </Grid>
+            <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0"/>
+        </Grid>
+        <Grid Name="gridStatus" Grid.Row="2"></Grid>
+    </Grid>
+</Window>
