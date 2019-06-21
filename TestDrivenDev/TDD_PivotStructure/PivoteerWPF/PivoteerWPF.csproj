@@ -154,6 +154,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Pivoteer\Pivoteer.csproj">
+      <Project>{eeab4aaa-41e7-4834-9bd9-1ff9c58c6ad0}</Project>
+      <Name>Pivoteer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
