@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PivoteerWPF.PivotClasses
 {
-    class Stock
+    class Stock : PivoteerWPF.MVVM.PivotClassBase
     {
     }
 }

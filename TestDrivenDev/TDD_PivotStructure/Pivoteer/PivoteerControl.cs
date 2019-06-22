@@ -44,7 +44,7 @@ namespace Pivoteer
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class PivoteerControl : Control
+    public class PivoteerControl : ItemsControl
     {
         static PivoteerControl()
         {

@@ -16,6 +16,7 @@
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
         <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
         <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
+        <vm:CrossTableModel               x:Key="PivtoModel"></vm:CrossTableModel>
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
 
         <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
@@ -41,10 +42,20 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="1">
-                            <TextBlock>Verify</TextBlock>
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="2">
                             <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
@@ -80,11 +91,21 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Button    Content="Delete"                   Grid.Column="0"></Button>
-                        <Button                                       Grid.Column="1">
-                            <TextBlock>Run</TextBlock>
+                        <Button    Grid.Column="1">
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
-                        <Button                                       Grid.Column="2">
-                            <TextBlock>Verify</TextBlock>
+                        <Button    Grid.Column="2">
+                            <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
@@ -119,10 +140,20 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Button    Grid.Column="0">
-                            <TextBlock>Run</TextBlock>
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="1">
-                            <TextBlock>Verify</TextBlock>
+                            <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
@@ -176,7 +207,7 @@
                                 Content                 = "{Binding SelectedNode}"/>
             </Grid>
             <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0">
-                <pvt:PivoteerControl>
+                <pvt:PivoteerControl DataContext="PivtoModel" ItemsSource="{Binding}">
 
                 </pvt:PivoteerControl>
             </Grid>

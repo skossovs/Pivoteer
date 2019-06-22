@@ -91,11 +91,14 @@
     <Compile Include="src\Data\Enums.cs" />
     <Compile Include="src\Data\ProjectOnTreeView.cs" />
     <Compile Include="src\MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="src\MVVM\CrossTableModel.cs" />
     <Compile Include="src\MVVM\Messages\ExcelFileCommandMessage.cs" />
+    <Compile Include="src\MVVM\Messages\PivotCommandMessage.cs" />
     <Compile Include="src\MVVM\Messages\ProjectLoadedMessage.cs" />
     <Compile Include="src\MVVM\Messages\TreeViewPopulatedMessage.cs" />
     <Compile Include="src\MVVM\Messages\TreeViewSelectionMessage.cs" />
     <Compile Include="src\MVVM\Messages\FileCommandMessage.cs" />
+    <Compile Include="src\MVVM\PivotClassBase.cs" />
     <Compile Include="src\MVVM\ProjectExtensions.cs" />
     <Compile Include="src\MVVM\TabItemsModel.cs" />
     <Compile Include="src\MVVM\TreeNodesDataTemplateSelector.cs" />
