@@ -16,7 +16,7 @@
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
         <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
         <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
-        <vm:CrossTableModel               x:Key="PivtoModel"></vm:CrossTableModel>
+        <vm:CrossTableModel               x:Key="PivotModel"></vm:CrossTableModel>
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
 
         <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
@@ -207,7 +207,8 @@
                                 Content                 = "{Binding SelectedNode}"/>
             </Grid>
             <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0">
-                <pvt:PivoteerControl DataContext="PivtoModel" ItemsSource="{Binding}">
+                <pvt:PivoteerControl DataContext = "{Binding Source={StaticResource PivotModel}}"
+                                     ItemsSource = "{Binding}">
 
                 </pvt:PivoteerControl>
             </Grid>

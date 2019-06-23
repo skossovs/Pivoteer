@@ -31,7 +31,7 @@ namespace PivoteerWPF.MVVM
         {
             switch(fileCommand.Command)
             {
-                case "ADD":
+                case TreeNodeCommand.Add:
                     var sheets = ApplicationCommands.RetreiveSheets(fileCommand.FullPath);
                     // Add to Project
                     _content.ExcelFiles.Add(new ExcelFileData()
@@ -120,6 +120,7 @@ namespace PivoteerWPF.MVVM
                     });
 
                     properties = new Dictionary<string, string>();
+                    properties.Add("ExcelFilePath", f.ExcelFileFullPath); // TODO: magic constants
                     properties.Add("SheetName", s.SheetName);
                     properties.Add("ClassName", s.ClassName);
                     lstNodes.Add(new TreeNode()

@@ -102,7 +102,7 @@ namespace PivoteerWPF.MVVM
             if(!t.Item1)
             {
                 // Send message back to TreeView
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ExcelFileCommandMessage(_treeNode.Key, "ADD" ,t.Item2)); // TODO: generic constant need to be in ENUM
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ExcelFileCommandMessage(_treeNode.Key, TreeNodeCommand.Add, t.Item2));
             }
         }
         #region run / verify commands
@@ -124,17 +124,34 @@ namespace PivoteerWPF.MVVM
 
         private void Validate(string _)
         {
-            IEnumerable<PivotClassBase> lstData = null;
-            // TODO: Load from Excel
-            // Send message
+            var lstData = LoadFromExcel();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(lstData, TreeNodeCommand.Validate));
         }
         private void Run(string _)
         {
-            IEnumerable<PivotClassBase> lstData = null;
-            // TODO: Load from Excel
-            // Send Message
+            var lstData = LoadFromExcel();
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(lstData, TreeNodeCommand.Run));
+        }
+
+        private IEnumerable<PivotClassBase> LoadFromExcel()
+        {
+            IEnumerable<PivotClassBase> lstData = null;
+            // Load from Excel
+            var path      = _treeNode.Properties["ExcelFilePath"];
+            var sheet     = _treeNode.Properties["SheetName"];
+            var className = _treeNode.Properties["ClassName"];
+
+            switch (className)
+            {
+                case "Option":
+                    lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, "Value");
+                    break;
+                case "SpotPrice":
+                    lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, "Value"); // TODO: Magic constant, replace with attributes
+                    break;
+            }
+
+            return lstData;
         }
         #endregion
     }
