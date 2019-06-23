@@ -78,5 +78,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pivot.Accessories\Pivot.Accessories.csproj">
+      <Project>{639c31a5-1b9d-4dfa-a864-66814c3e0c31}</Project>
+      <Name>Pivot.Accessories</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -159,6 +159,11 @@
                 </GroupBox>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="PivotDataControlTemplate" DataType = "{x:Type ContentControl}">
+            <pvt:PivoteerControl DataContext = "{Binding Source = {StaticResource PivotModel}}"
+                                 ItemsSource = "{Binding Items}">
+            </pvt:PivoteerControl>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -203,15 +208,13 @@
                 </TreeView>
                 <ContentControl Grid.Row="1"
                                 ContentTemplateSelector = "{StaticResource myDataTemplateSelector}"
-                                DataContext             = "{Binding Source={StaticResource TabItemsModel}}"
+                                DataContext             = "{Binding Source = {StaticResource TabItemsModel}}"
                                 Content                 = "{Binding SelectedNode}"/>
             </Grid>
-            <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0">
-                <pvt:PivoteerControl DataContext = "{Binding Source={StaticResource PivotModel}}"
-                                     ItemsSource = "{Binding Items}">
-
-                </pvt:PivoteerControl>
-            </Grid>
+            <ContentControl Grid.Column     = "1"
+                            DataContext     = "{Binding Source = {StaticResource PivotModel}}"
+                            ContentTemplate = "{StaticResource PivotDataControlTemplate}">
+            </ContentControl>
         </Grid>
         <Grid Name="gridStatus" Grid.Row="2"></Grid>
     </Grid>

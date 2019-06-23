@@ -54,6 +54,37 @@ namespace Pivoteer
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
+            ReloadItems();
+        }
+
+        private void ReloadItems()
+        {
+            // get the item's type
+            Object o = this.Items.CurrentItem;
+            Type TObjectType = o.GetType();
+            // get Aggregation Functions class
+            var customAttributes = TObjectType.CustomAttributes;
+            var aggregationType = customAttributes.FirstOrDefault(t => t.AttributeType.Name == "Aggregators")
+                .NamedArguments.FirstOrDefault().TypedValue;
+            // create classes dynamically
+            Type   typeWrapperType = typeof(Pivot.Accessories.Mapping.TypeWrapper<,>);
+            Type[] typeArgs = { TObjectType, (aggregationType.Value as Type) };
+            var makeTypeWrapper = typeWrapperType.MakeGenericType(typeArgs);
+            object typeWrapper = Activator.CreateInstance(makeTypeWrapper);
+
+            Type generatorType = typeof(Pivot.Accessories.PivotCoordinates.PivotGenerator<,>);
+            var makeGenerator = generatorType.MakeGenericType(typeArgs);
+            object generator = Activator.CreateInstance(makeGenerator, typeWrapper);
+
+            // Items.Cast<T>()
+            var method = typeof(Enumerable).GetMethod("Cast");
+            var generic = method.MakeGenericMethod(TObjectType);
+            object dataAsEnum = generic.Invoke(null, new object[] { Items });
+
+            //var mtx = generator.GeneratePivot(data);
+            // TODO: Not working
+            var magicMethod = generatorType.GetMethod("GeneratePivot");
+            object mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum });
 
         }
     }
