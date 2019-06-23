@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="src\Common\AggregationFunctions.cs" />
     <Compile Include="src\Common\ApplicationCommands.cs" />
     <Compile Include="src\Common\DelegateCommand.cs" />
     <Compile Include="src\Common\ExcelReadUtils.cs" />
@@ -159,6 +160,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pivot.Accessories\Pivot.Accessories.csproj">
+      <Project>{639c31a5-1b9d-4dfa-a864-66814c3e0c31}</Project>
+      <Name>Pivot.Accessories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pivoteer\Pivoteer.csproj">
       <Project>{eeab4aaa-41e7-4834-9bd9-1ff9c58c6ad0}</Project>
       <Name>Pivoteer</Name>

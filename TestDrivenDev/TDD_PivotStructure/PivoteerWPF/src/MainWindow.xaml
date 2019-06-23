@@ -208,7 +208,7 @@
             </Grid>
             <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0">
                 <pvt:PivoteerControl DataContext = "{Binding Source={StaticResource PivotModel}}"
-                                     ItemsSource = "{Binding}">
+                                     ItemsSource = "{Binding Items}">
 
                 </pvt:PivoteerControl>
             </Grid>

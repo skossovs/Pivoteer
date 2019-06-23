@@ -125,12 +125,12 @@ namespace PivoteerWPF.MVVM
         private void Validate(string _)
         {
             var lstData = LoadFromExcel();
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(lstData, TreeNodeCommand.Validate));
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(_treeNode.Key, lstData, TreeNodeCommand.Validate));
         }
         private void Run(string _)
         {
             var lstData = LoadFromExcel();
-            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(lstData, TreeNodeCommand.Run));
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(_treeNode.Key, lstData, TreeNodeCommand.Run));
         }
 
         private IEnumerable<PivotClassBase> LoadFromExcel()

@@ -9,11 +9,12 @@ namespace PivoteerWPF.MVVM.Messages
 {
     class PivotCommandMessage
     {
-        public PivotCommandMessage(IEnumerable<PivotClassBase> data, TreeNodeCommand command)
+        public PivotCommandMessage(int key, IEnumerable<PivotClassBase> data, TreeNodeCommand command)
         {
             Data = data;
             Command = command;
         }
+        public int Key { get; set; }
         public IEnumerable<PivotClassBase> Data  {  get; set;   }
         public TreeNodeCommand Command { get; set; }
     }
