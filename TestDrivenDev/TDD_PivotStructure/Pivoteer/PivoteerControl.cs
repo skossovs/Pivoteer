@@ -73,7 +73,8 @@ namespace Pivoteer
             object typeWrapper = Activator.CreateInstance(makeTypeWrapper);
 
             Type generatorType = typeof(Pivot.Accessories.PivotCoordinates.PivotGenerator<,>);
-            var makeGenerator = generatorType.MakeGenericType(typeArgs);
+            Type[] typeArgs1 = { TObjectType, (aggregationType.Value as Type) };
+            var makeGenerator = generatorType.MakeGenericType(typeArgs1);
             object generator = Activator.CreateInstance(makeGenerator, typeWrapper);
 
             // Items.Cast<T>()
@@ -81,9 +82,14 @@ namespace Pivoteer
             var generic = method.MakeGenericMethod(TObjectType);
             object dataAsEnum = generic.Invoke(null, new object[] { Items });
 
+            // IEnumerable<T>
+            Type enumType = typeof(IEnumerable<>);
+            Type[] enumArgType = { TObjectType };
+            var genericEnumClass = enumType.MakeGenericType(enumArgType);
+
             //var mtx = generator.GeneratePivot(data);
-            // TODO: Not working
-            var magicMethod = generatorType.GetMethod("GeneratePivot");
+            // TODO: almost there
+            var magicMethod = makeGenerator.GetMethod("GeneratePivot", new[] { genericEnumClass });
             object mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum });
 
         }
