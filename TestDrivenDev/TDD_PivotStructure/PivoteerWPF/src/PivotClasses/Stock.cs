@@ -8,12 +8,15 @@ namespace PivoteerWPF.PivotClasses
     [Aggregators(AggregatorType = typeof(AggregationFunctions))]
     class Stock : PivotClassBase
     {
-        [DimmensionX(Level = 2, AggregationFuncName = "Sum")]
+        // Y - Dimmensions
+        [DimmensionY(Level = 2, AggregationFuncName = "Sum")]
         public string Sector;
-        [DimmensionX(Level = 1, AggregationFuncName = "Sum")]
+        [DimmensionY(Level = 1, AggregationFuncName = "Sum")]
         public string Industry;
-        [DimmensionX(Level = 0, AggregationFuncName = "Sum")]
+        [DimmensionY(Level = 0, AggregationFuncName = "Sum")]
         public string Company;
+
+        // X - Dimmensions
         [DimmensionX(Level = 3, AggregationFuncName = "Sum")]
         public string Year;
         [DimmensionX(Level = 2, AggregationFuncName = "Sum")]
