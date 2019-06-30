@@ -1,7 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Pivoteer">
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:Pivoteer"
+    xmlns:utils="clr-namespace:Pivoteer.Utils">
+    
     <Style TargetType="{x:Type local:PivoteerControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -12,6 +15,60 @@
 
                     </Border>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ItemContainerStyle --><!--
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property = "Grid.Column" Value="{Binding X}" />
+                    <Setter Property = "Grid.Row"    Value="{Binding Y}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        
+        --><!-- ItemTemplate --><!--
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
+                        <TextBlock Text="{Binding Value}"></TextBlock>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>-->
+        
+        <!-- ItemsPanel -->
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsControl ItemsSource="{Binding Cells}" 
+                      >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid   utils:GridHelpers.RowCount    = "{Binding RowCount}"
+                                        utils:GridHelpers.ColumnCount = "{Binding ColumnCount}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Grid.Row"    Value="{Binding X}"/>
+                                <Setter Property="Grid.Column" Value="{Binding Y}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
+                                    <TextBlock Text="{Binding Value}"  ></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+
+                </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
     </Style>

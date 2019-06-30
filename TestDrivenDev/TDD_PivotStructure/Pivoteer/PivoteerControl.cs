@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,9 +45,21 @@ namespace Pivoteer
     ///
     ///     <MyNamespace:CustomControl1/>
     ///
+    /// https://stackoverflow.com/questions/11266735/creating-custom-itemscontrol
+    /// https://rachel53461.wordpress.com/2011/09/17/wpf-itemscontrol-example/
     /// </summary>
-    public class PivoteerControl : ItemsControl
+    public class PivoteerControl : ItemsControl, INotifyPropertyChanged
     {
+        List<Cell> _cells;
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
         static PivoteerControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PivoteerControl), new FrameworkPropertyMetadata(typeof(PivoteerControl)));
@@ -54,11 +67,33 @@ namespace Pivoteer
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
-            ReloadItems();
+            string[,] mtx = ReloadItems();
+            _cells = new List<Cell>();
+
+            for (int i = 0; i <= mtx.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= mtx.GetUpperBound(1); j++)
+                {
+                    _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
+                }
+            }
+            OnPropertyChanged("Cells");
         }
 
-        private void ReloadItems()
+        public List<Cell> Cells
         {
+            get
+            {
+                return _cells;
+            }
+            set
+            {
+                _cells = value;
+            }
+        }
+        private string[,] ReloadItems()
+        {
+            // TODO: not beautiful
             // get the item's type
             Object o = this.Items.CurrentItem;
             Type TObjectType = o.GetType();
@@ -88,10 +123,10 @@ namespace Pivoteer
             var genericEnumClass = enumType.MakeGenericType(enumArgType);
 
             //var mtx = generator.GeneratePivot(data);
-            // TODO: almost there
             var magicMethod = makeGenerator.GetMethod("GeneratePivot", new[] { genericEnumClass });
             object mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum });
 
+            return mtxResult as string[,];
         }
     }
 }
