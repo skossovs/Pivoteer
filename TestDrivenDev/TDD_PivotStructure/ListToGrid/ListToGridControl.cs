@@ -50,9 +50,6 @@ namespace ListToGrid
     /// </summary>
     public class ListToGridControl : ItemsControl
     {
-        List<Cell> _cells;
-
-
         static ListToGridControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ListToGridControl), new FrameworkPropertyMetadata(typeof(ListToGridControl)));
@@ -73,6 +70,9 @@ namespace ListToGrid
             set;
         }
 
+        // TODO: where should I Calculate these????
+        //public int RowCount { get { return 2; } }
+        //public int ColumnCount { get { return 2; } }
 
         ////
         //// Summary:

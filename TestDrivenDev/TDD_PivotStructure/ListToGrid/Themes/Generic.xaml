@@ -4,8 +4,6 @@
     xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     xmlns:local="clr-namespace:ListToGrid">
 
-
-
     <Style TargetType="{x:Type local:ListToGridControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -18,22 +16,20 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Setter Property="ItemsSource" Value="{Binding Cells,RelativeSource={RelativeSource Self}, diag:PresentationTraceSources.TraceLevel=High}"/>
-
+        <Setter Property="ItemsSource" Value="{Binding Cells,RelativeSource={RelativeSource Self}}"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <Grid   local:GridHelpers.RowCount    = "{Binding RowCount, diag:PresentationTraceSources.TraceLevel=High}"
-                            local:GridHelpers.ColumnCount = "{Binding ColumnCount}" />
+                    <Grid   local:GridHelpers.RowCount    = "2"
+                            local:GridHelpers.ColumnCount = "2" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style>
-                    <Setter Property="Grid.Row"    Value="{Binding X, diag:PresentationTraceSources.TraceLevel=High}"/>
-                    <Setter Property="Grid.Column" Value="{Binding Y, diag:PresentationTraceSources.TraceLevel=High}"/>
+                    <Setter Property="Grid.Row"    Value="{Binding X}"/>
+                    <Setter Property="Grid.Column" Value="{Binding Y}"/>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -41,12 +37,10 @@
             <Setter.Value>
                 <DataTemplate DataType="{x:Type local:Cell}">
                     <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
-                        <TextBlock Text="{Binding Value, diag:PresentationTraceSources.TraceLevel=High}"></TextBlock>
+                        <TextBlock Text="{Binding Value}"></TextBlock>
                     </Border>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-
-        
     </Style>
 </ResourceDictionary>
