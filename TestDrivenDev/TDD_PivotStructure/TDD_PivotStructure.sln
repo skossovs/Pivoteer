@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PivoteerWPF", "PivoteerWPF\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pivoteer", "Pivoteer\Pivoteer.csproj", "{EEAB4AAA-41E7-4834-9BD9-1FF9C58C6AD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListToGrid", "ListToGrid\ListToGrid.csproj", "{AFB04D7B-D40F-488C-91AA-0CF132990B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControlTestsWPF", "CustomControlTestsWPF\CustomControlTestsWPF.csproj", "{A2D3FE7F-C616-46DC-B4B1-B198B88F6A54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{EEAB4AAA-41E7-4834-9BD9-1FF9C58C6AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEAB4AAA-41E7-4834-9BD9-1FF9C58C6AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEAB4AAA-41E7-4834-9BD9-1FF9C58C6AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB04D7B-D40F-488C-91AA-0CF132990B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB04D7B-D40F-488C-91AA-0CF132990B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB04D7B-D40F-488C-91AA-0CF132990B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB04D7B-D40F-488C-91AA-0CF132990B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D3FE7F-C616-46DC-B4B1-B198B88F6A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D3FE7F-C616-46DC-B4B1-B198B88F6A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D3FE7F-C616-46DC-B4B1-B198B88F6A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D3FE7F-C616-46DC-B4B1-B198B88F6A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

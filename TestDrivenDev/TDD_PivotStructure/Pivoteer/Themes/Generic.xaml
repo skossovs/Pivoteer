@@ -43,8 +43,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <ItemsControl ItemsSource="{Binding Cells}" 
-                      >
+                    <ItemsControl ItemsSource="{Binding Cells}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Grid   utils:GridHelpers.RowCount    = "{Binding RowCount}"
@@ -65,9 +64,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-
-
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

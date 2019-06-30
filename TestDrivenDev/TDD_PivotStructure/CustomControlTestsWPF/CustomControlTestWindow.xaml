@@ -1,0 +1,19 @@
+﻿<Window x:Class="CustomControlTestsWPF.CustomControlTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomControlTestsWPF"
+        xmlns:listgrid ="clr-namespace:ListToGrid;assembly=ListToGrid"
+        mc:Ignorable="d"
+        Title="Custom Control Test" Height="350" Width="525">
+    <Window.Resources>
+        <local:GridModel x:Key="GridModel"/>
+    </Window.Resources>
+    <Grid>
+        <listgrid:ListToGridControl DataContext="{Binding Source={StaticResource GridModel}}"
+                                    ItemsSource="{Binding}">
+
+        </listgrid:ListToGridControl>
+    </Grid>
+</Window>
