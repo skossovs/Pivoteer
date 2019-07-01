@@ -23,14 +23,14 @@ namespace ListToGrid
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
     ///
     /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
+    /// Add this XmlNamespace attribute to the root element of the markup file where it is
     /// to be used:
     ///
     ///     xmlns:MyNamespace="clr-namespace:ListToGrid"
     ///
     ///
     /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
+    /// Add this XmlNamespace attribute to the root element of the markup file where it is
     /// to be used:
     ///
     ///     xmlns:MyNamespace="clr-namespace:ListToGrid;assembly=ListToGrid"
@@ -50,6 +50,9 @@ namespace ListToGrid
     /// </summary>
     public class ListToGridControl : ItemsControl
     {
+        private int _maxRows;
+        private int _maxColumns;
+
         static ListToGridControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ListToGridControl), new FrameworkPropertyMetadata(typeof(ListToGridControl)));
@@ -62,6 +65,9 @@ namespace ListToGrid
             {
                 Cells.Add(c as Cell);
             }
+            // TODO: ugly
+            _maxColumns = Cells.Max(c => c.X) + 1;
+            _maxRows    = Cells.Max(c => c.Y) + 1;
         }
 
         public ObservableCollection<Cell> Cells
@@ -70,37 +76,7 @@ namespace ListToGrid
             set;
         }
 
-        // TODO: where should I Calculate these????
-        //public int RowCount { get { return 2; } }
-        //public int ColumnCount { get { return 2; } }
-
-        ////
-        //// Summary:
-        ////     Gets or sets a collection used to generate the content of the System.Windows.Controls.ItemsControl.
-        ////
-        //// Returns:
-        ////     A collection that is used to generate the content of the System.Windows.Controls.ItemsControl.
-        ////     The default is null.
-        //[Bindable(true)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //public new IEnumerable<Cell> ItemsSource
-        //{
-        //    get;
-        //    set
-        //    {
-        //        base.ItemsSource = 
-        //    }
-        //}
-        ////
-        //// Summary:
-        ////     Gets the collection used to generate the content of the System.Windows.Controls.ItemsControl.
-        ////
-        //// Returns:
-        ////     The collection that is used to generate the content of the System.Windows.Controls.ItemsControl.
-        ////     The default is an empty collection.
-        //[Bindable(true)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        //public new ItemCollection Items { get; }
-
+        public int MaxColumns {  get { return _maxColumns; } }
+        public int MaxRows    {  get { return _maxRows;    } }
     }
 }

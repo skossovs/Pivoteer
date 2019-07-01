@@ -20,8 +20,11 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <Grid   local:GridHelpers.RowCount    = "2"
-                            local:GridHelpers.ColumnCount = "2" />
+                    <Grid   DataContext                   = "{Binding RelativeSource =
+                                                             {RelativeSource Mode = FindAncestor, AncestorType = local:ListToGridControl}}"
+                            local:GridHelpers.RowCount    = "{Binding MaxRows}"
+                            local:GridHelpers.ColumnCount = "{Binding MaxColumns}">
+                    </Grid>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -36,7 +39,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="{x:Type local:Cell}">
-                    <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
+                    <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="4,4,4,4" Padding="1,1,1,1">
                         <TextBlock Text="{Binding Value}"></TextBlock>
                     </Border>
                 </DataTemplate>
