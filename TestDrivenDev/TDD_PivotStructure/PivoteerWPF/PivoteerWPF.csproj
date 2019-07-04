@@ -160,6 +160,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ListToGrid\ListToGrid.csproj">
+      <Project>{afb04d7b-d40f-488c-91aa-0cf132990b30}</Project>
+      <Name>ListToGrid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pivot.Accessories\Pivot.Accessories.csproj">
       <Project>{639c31a5-1b9d-4dfa-a864-66814c3e0c31}</Project>
       <Name>Pivot.Accessories</Name>

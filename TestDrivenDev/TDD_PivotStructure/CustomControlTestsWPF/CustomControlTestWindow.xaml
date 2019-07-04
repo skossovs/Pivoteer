@@ -13,7 +13,6 @@
     <Grid>
         <listgrid:ListToGridControl DataContext="{Binding Source={StaticResource GridModel}}"
                                     ItemsSource="{Binding}">
-
         </listgrid:ListToGridControl>
     </Grid>
 </Window>

@@ -68,6 +68,7 @@ namespace Pivoteer
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             string[,] mtx = ReloadItems();
+            // TODO: Split whole matrix on 3 sub-tables: RowHeaders, ColumnHeaders and Values
             _cells = new List<Cell>();
 
             for (int i = 0; i <= mtx.GetUpperBound(0); i++)

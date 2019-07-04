@@ -3,8 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:Pivoteer"
+    xmlns:mvvm ="clr-namespace:Pivoteer.MVVM"
+    xmlns:listgrid ="clr-namespace:ListToGrid;assembly=ListToGrid"
     xmlns:utils="clr-namespace:Pivoteer.Utils">
-    
+
+    <mvvm:CrossTableModel x:Key="CrossTableModel"/>
+    <mvvm:CrossTableModel x:Key="ColumnHeadersModel"/>
+    <mvvm:CrossTableModel x:Key="RowHeadersModel"/>
+
     <Style TargetType="{x:Type local:PivoteerControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -12,58 +18,38 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
-        <!-- ItemContainerStyle --><!--
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style>
-                    <Setter Property = "Grid.Column" Value="{Binding X}" />
-                    <Setter Property = "Grid.Row"    Value="{Binding Y}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
-        
-        --><!-- ItemTemplate --><!--
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
-                        <TextBlock Text="{Binding Value}"></TextBlock>
-                    </Border>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>-->
-        
-        <!-- ItemsPanel -->
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <ItemsControl ItemsSource="{Binding Cells}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Grid   utils:GridHelpers.RowCount    = "{Binding RowCount}"
-                                        utils:GridHelpers.ColumnCount = "{Binding ColumnCount}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Grid.Row"    Value="{Binding X}"/>
-                                <Setter Property="Grid.Column" Value="{Binding Y}"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderThickness="2" BorderBrush="Silver" CornerRadius="8,4,4,4" Padding="2,2,2,2">
-                                    <TextBlock Text="{Binding Value}"  ></TextBlock>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0"
+                                    DataContext="{Binding Source={StaticResource RowHeadersModel}}"
+                                    ItemsSource="{Binding}">
+                        </listgrid:ListToGridControl>
+                        <listgrid:ListToGridControl Grid.Row="0" Grid.Column="1"
+                                    DataContext="{Binding Source={StaticResource ColumnHeadersModel}}"
+                                    ItemsSource="{Binding}">
+                        </listgrid:ListToGridControl>
+                        <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1"
+                                    DataContext="{Binding Source={StaticResource CrossTableModel}}"
+                                    ItemsSource="{Binding}">
+                        </listgrid:ListToGridControl>
+
+                    </Grid>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

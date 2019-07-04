@@ -31,8 +31,8 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style>
-                    <Setter Property="Grid.Row"    Value="{Binding X}"/>
-                    <Setter Property="Grid.Column" Value="{Binding Y}"/>
+                    <Setter Property="Grid.Row"    Value="{Binding Y}"/>
+                    <Setter Property="Grid.Column" Value="{Binding X}"/>
                 </Style>
             </Setter.Value>
         </Setter>
