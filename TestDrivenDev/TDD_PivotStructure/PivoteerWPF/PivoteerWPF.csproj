@@ -94,6 +94,7 @@
     <Compile Include="src\Data\ProjectOnTreeView.cs" />
     <Compile Include="src\MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="src\MVVM\CrossTableModel.cs" />
+    <Compile Include="src\MVVM\FixedMacrosModel.cs" />
     <Compile Include="src\MVVM\Messages\ExcelFileCommandMessage.cs" />
     <Compile Include="src\MVVM\Messages\PivotCommandMessage.cs" />
     <Compile Include="src\MVVM\Messages\ProjectLoadedMessage.cs" />

@@ -14,6 +14,7 @@
     <Window.Resources>
         <vm:ShellViewModel                x:Key="ShellViewModel"></vm:ShellViewModel>
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
+        <vm:FixedMacrosModel              x:Key="FixedMacrosModel"></vm:FixedMacrosModel>
         <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
         <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
         <vm:CrossTableModel               x:Key="PivotModel"></vm:CrossTableModel>
@@ -173,12 +174,18 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File" DataContext="{Binding Source={StaticResource ShellViewModel}}">
-                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}" CommandParameter="NEW" />
-                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}" CommandParameter="OPEN"/>
-                    <MenuItem Header="_Save" Command="{Binding FileMenuCommand}" CommandParameter="SAVE"/>
+                <MenuItem Header="_File"   DataContext="{Binding Source={StaticResource ShellViewModel}}">
+                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}"    CommandParameter="NEW" />
+                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}"    CommandParameter="OPEN"/>
+                    <MenuItem Header="_Save" Command="{Binding FileMenuCommand}"    CommandParameter="SAVE"/>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}" CommandParameter="EXIT" />
+                    <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}"    CommandParameter="EXIT" />
+                </MenuItem>
+                <MenuItem Header="_Macros" DataContext="{Binding Source={StaticResource FixedMacrosModel}}">
+                    <MenuItem Header="_Start Stock Prices"
+                                             Command="{Binding MacrosMenuCommand}"  CommandParameter="StockPrices"/>
+                    <MenuItem Header="_Start Stock MarketCap"
+                                             Command="{Binding MacrosMenuCommand}"  CommandParameter="StockMktCap"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
