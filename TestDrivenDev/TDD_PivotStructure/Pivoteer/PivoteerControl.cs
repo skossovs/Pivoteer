@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pivoteer.MVVM.Messages;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -78,20 +79,21 @@ namespace Pivoteer
                     _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
                 }
             }
-            OnPropertyChanged("Cells");
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new CrossTablePopulateMessage(_cells));
+            //OnPropertyChanged("Cells");
         }
 
-        public List<Cell> Cells
-        {
-            get
-            {
-                return _cells;
-            }
-            set
-            {
-                _cells = value;
-            }
-        }
+        //public List<Cell> Cells
+        //{
+        //    get
+        //    {
+        //        return _cells;
+        //    }
+        //    set
+        //    {
+        //        _cells = value;
+        //    }
+        //}
         private string[,] ReloadItems()
         {
             // TODO: not beautiful

@@ -35,7 +35,6 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-
                         <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0"
                                     DataContext="{Binding Source={StaticResource RowHeadersModel}}"
                                     ItemsSource="{Binding}">
@@ -46,9 +45,8 @@
                         </listgrid:ListToGridControl>
                         <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1"
                                     DataContext="{Binding Source={StaticResource CrossTableModel}}"
-                                    ItemsSource="{Binding}">
+                                    ItemsSource="{Binding Items}">
                         </listgrid:ListToGridControl>
-
                     </Grid>
                 </ItemsPanelTemplate>
             </Setter.Value>
