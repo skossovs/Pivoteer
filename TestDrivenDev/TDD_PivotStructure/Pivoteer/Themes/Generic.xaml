@@ -7,10 +7,6 @@
     xmlns:listgrid ="clr-namespace:ListToGrid;assembly=ListToGrid"
     xmlns:utils="clr-namespace:Pivoteer.Utils">
 
-    <mvvm:CrossTableModel x:Key="CrossTableModel"/>
-    <mvvm:CrossTableModel x:Key="ColumnHeadersModel"/>
-    <mvvm:CrossTableModel x:Key="RowHeadersModel"/>
-
     <Style TargetType="{x:Type local:PivoteerControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -36,15 +32,15 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0"
-                                    DataContext="{Binding Source={StaticResource RowHeadersModel}}"
+                                    DataContext="{Binding Source={RelativeSource Self}, Path=RowHeadersModel}"
                                     ItemsSource="{Binding}">
                         </listgrid:ListToGridControl>
                         <listgrid:ListToGridControl Grid.Row="0" Grid.Column="1"
-                                    DataContext="{Binding Source={StaticResource ColumnHeadersModel}}"
+                                    DataContext="{Binding Source={RelativeSource Self}, Path=ColumnHeadersModel}"
                                     ItemsSource="{Binding}">
                         </listgrid:ListToGridControl>
                         <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1"
-                                    DataContext="{Binding Source={StaticResource CrossTableModel}}"
+                                    DataContext="{Binding Source={RelativeSource Self}, Path=CrossTableModel}"
                                     ItemsSource="{Binding Items}">
                         </listgrid:ListToGridControl>
                     </Grid>

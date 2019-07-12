@@ -1,4 +1,5 @@
-﻿using Pivoteer.MVVM.Messages;
+﻿using ListToGrid;
+using Pivoteer.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,12 +25,22 @@ namespace Pivoteer.MVVM
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<CrossTablePopulateMessage>(this, ReceiveCrossTablePopulateCommand);
         }
 
-        public List<Cell> Items { get; private set; }
+        List<Cell> _items;
+        private List<Cell> Items {
+            get
+            {
+                return _items;
+            }
+            set
+            {
+                _items = value;
+                OnPropertyChanged("Items");
+            }
+        }
 
         private void ReceiveCrossTablePopulateCommand(CrossTablePopulateMessage obj)
         {
             Items = obj.TableCells;
-            OnPropertyChanged("Items");
         }
     }
 }

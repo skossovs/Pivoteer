@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace PivoteerWPF.MVVM
 {
+    // TODO: this macros class is for temporary use only. Must be dropped after pivot load become stable
     class FixedMacrosModel : INotifyPropertyChanged
     {
         private const string C_STOCK_PRICES  = "StockPrices";

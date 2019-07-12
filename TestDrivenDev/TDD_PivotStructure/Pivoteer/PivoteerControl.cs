@@ -1,4 +1,5 @@
-﻿using Pivoteer.MVVM.Messages;
+﻿using ListToGrid;
+using Pivoteer.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -53,6 +54,11 @@ namespace Pivoteer
     {
         List<Cell> _cells;
 
+
+        public MVVM.CrossTableModel    CrossTableModel   { get; private set; }
+        public MVVM.RowHeadersModel    RowHeaderModel    { get; private set; }
+        public MVVM.ColumnHeadersModel ColumnHeaderModel { get; private set; }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -64,6 +70,16 @@ namespace Pivoteer
         static PivoteerControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PivoteerControl), new FrameworkPropertyMetadata(typeof(PivoteerControl)));
+        }
+
+        public PivoteerControl()
+        {
+            CrossTableModel   = new MVVM.CrossTableModel();
+            OnPropertyChanged("CrossTableModel");
+            RowHeaderModel    = new MVVM.RowHeadersModel();
+            OnPropertyChanged("RowHeadersModel");
+            ColumnHeaderModel = new MVVM.ColumnHeadersModel();
+            OnPropertyChanged("ColumnHeaderModel");
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -83,17 +99,19 @@ namespace Pivoteer
             //OnPropertyChanged("Cells");
         }
 
-        //public List<Cell> Cells
-        //{
-        //    get
-        //    {
-        //        return _cells;
-        //    }
-        //    set
-        //    {
-        //        _cells = value;
-        //    }
-        //}
+
+
+        public List<Cell> Cells
+        {
+            get
+            {
+                return _cells;
+            }
+            set
+            {
+                _cells = value;
+            }
+        }
         private string[,] ReloadItems()
         {
             // TODO: not beautiful
