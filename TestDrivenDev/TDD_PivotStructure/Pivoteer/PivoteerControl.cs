@@ -46,9 +46,10 @@ namespace Pivoteer
     /// Go ahead and use your control in the XAML file.
     ///
     ///     <MyNamespace:CustomControl1/>
-    ///
+    /// Titans Shoulders:
     /// https://stackoverflow.com/questions/11266735/creating-custom-itemscontrol
     /// https://rachel53461.wordpress.com/2011/09/17/wpf-itemscontrol-example/
+    /// https://stackoverflow.com/questions/38842082/create-a-custom-control-with-the-combination-of-multiple-controls-in-wpf-c-sharp
     /// </summary>
     public class PivoteerControl : ItemsControl, INotifyPropertyChanged
     {
@@ -58,6 +59,10 @@ namespace Pivoteer
         public MVVM.CrossTableModel    CrossTableModel   { get; private set; }
         public MVVM.RowHeadersModel    RowHeaderModel    { get; private set; }
         public MVVM.ColumnHeadersModel ColumnHeaderModel { get; private set; }
+
+        private ListToGridControl _rowHeadersGrid;
+        private ListToGridControl _columnHeadersGrid;
+        private ListToGridControl _crossTableGrid;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,12 +79,20 @@ namespace Pivoteer
 
         public PivoteerControl()
         {
+            //DataContext = "{Binding Source={RelativeSource Self}, Path=CrossTableModel}"
+            //ItemsSource = "{Binding Items}"
             CrossTableModel   = new MVVM.CrossTableModel();
-            OnPropertyChanged("CrossTableModel");
             RowHeaderModel    = new MVVM.RowHeadersModel();
-            OnPropertyChanged("RowHeadersModel");
             ColumnHeaderModel = new MVVM.ColumnHeadersModel();
-            OnPropertyChanged("ColumnHeaderModel");
+        }
+
+        public override void OnApplyTemplate()
+        {
+            _crossTableGrid    = this.GetTemplateChild("PART_CrossTable") as ListToGridControl;
+            _columnHeadersGrid = this.GetTemplateChild("PART_ColumnHeadersTable") as ListToGridControl;
+            _rowHeadersGrid    = this.GetTemplateChild("PART_RowHeadersTable") as ListToGridControl;
+
+            _crossTableGrid.ItemsSource = Cells;
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -96,7 +109,8 @@ namespace Pivoteer
                 }
             }
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new CrossTablePopulateMessage(_cells));
-            //OnPropertyChanged("Cells");
+            _crossTableGrid.ItemsSource = Cells;
+
         }
 
 

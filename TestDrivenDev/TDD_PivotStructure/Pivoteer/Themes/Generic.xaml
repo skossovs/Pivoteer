@@ -14,37 +14,24 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0" Name="PART_RowHeadersTable">
+                            </listgrid:ListToGridControl>
+                            <listgrid:ListToGridControl Grid.Row="0" Grid.Column="1" Name="PART_ColumnHeadersTable">
+                            </listgrid:ListToGridControl>
+                            <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1" Name="PART_CrossTable">
+                            </listgrid:ListToGridControl>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0"
-                                    DataContext="{Binding Source={RelativeSource Self}, Path=RowHeadersModel}"
-                                    ItemsSource="{Binding}">
-                        </listgrid:ListToGridControl>
-                        <listgrid:ListToGridControl Grid.Row="0" Grid.Column="1"
-                                    DataContext="{Binding Source={RelativeSource Self}, Path=ColumnHeadersModel}"
-                                    ItemsSource="{Binding}">
-                        </listgrid:ListToGridControl>
-                        <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1"
-                                    DataContext="{Binding Source={RelativeSource Self}, Path=CrossTableModel}"
-                                    ItemsSource="{Binding Items}">
-                        </listgrid:ListToGridControl>
-                    </Grid>
-                </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
     </Style>
