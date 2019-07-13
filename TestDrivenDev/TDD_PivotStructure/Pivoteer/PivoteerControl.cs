@@ -92,7 +92,13 @@ namespace Pivoteer
             _columnHeadersGrid = this.GetTemplateChild("PART_ColumnHeadersTable") as ListToGridControl;
             _rowHeadersGrid    = this.GetTemplateChild("PART_RowHeadersTable") as ListToGridControl;
 
-            _crossTableGrid.ItemsSource = Cells;
+            // TODO: don't understand exactly what's going on but it works
+            Binding b = new Binding("Cells");
+            b.Source = this;
+            b.Mode = BindingMode.OneWay;
+            BindingOperations.SetBinding(_crossTableGrid, ListToGridControl.ItemsSourceProperty, b);
+
+            base.OnApplyTemplate();
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -109,7 +115,8 @@ namespace Pivoteer
                 }
             }
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new CrossTablePopulateMessage(_cells));
-            _crossTableGrid.ItemsSource = Cells;
+            //_crossTableGrid.ItemsSource = Cells;
+            Cells = _cells;
 
         }
 
@@ -124,6 +131,7 @@ namespace Pivoteer
             set
             {
                 _cells = value;
+                OnPropertyChanged("Cells");
             }
         }
         private string[,] ReloadItems()
