@@ -95,7 +95,7 @@ namespace Pivoteer
             // TODO: don't understand exactly what's going on but it works
             Binding b = new Binding("Cells");
             b.Source = this;
-            b.Mode = BindingMode.OneWay;
+            b.Mode = BindingMode.TwoWay;
             BindingOperations.SetBinding(_crossTableGrid, ListToGridControl.ItemsSourceProperty, b);
 
             base.OnApplyTemplate();
@@ -107,15 +107,22 @@ namespace Pivoteer
             // TODO: Split whole matrix on 3 sub-tables: RowHeaders, ColumnHeaders and Values
             _cells = new List<Cell>();
 
-            for (int i = 0; i <= mtx.GetUpperBound(0); i++)
-            {
-                for (int j = 0; j <= mtx.GetUpperBound(1); j++)
-                {
-                    _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
-                }
-            }
+            //for (int i = 0; i <= mtx.GetUpperBound(0); i++)
+            //{
+            //    for (int j = 0; j <= mtx.GetUpperBound(1); j++)
+            //    {
+            //        _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
+            //    }
+            //}
+
+            _cells.Add(new ListToGrid.Cell() { X = 0, Y = 0, Value = "00" });
+            _cells.Add(new ListToGrid.Cell() { X = 0, Y = 1, Value = "01" });
+            _cells.Add(new ListToGrid.Cell() { X = 1, Y = 0, Value = "10" });
+            _cells.Add(new ListToGrid.Cell() { X = 1, Y = 1, Value = "11" });
+            _cells.Add(new ListToGrid.Cell() { X = 1, Y = 2, Value = "12" });
+            _cells.Add(new ListToGrid.Cell() { X = 5, Y = 6, Value = "56" });
+
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new CrossTablePopulateMessage(_cells));
-            //_crossTableGrid.ItemsSource = Cells;
             Cells = _cells;
 
         }
