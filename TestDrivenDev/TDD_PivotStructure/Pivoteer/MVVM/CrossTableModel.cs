@@ -26,7 +26,7 @@ namespace Pivoteer.MVVM
         }
 
         List<Cell> _items;
-        private List<Cell> Items {
+        public List<Cell> Items {
             get
             {
                 return _items;

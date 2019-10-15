@@ -48,10 +48,16 @@ namespace ListToGrid
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class ListToGridControl : ItemsControl
+    public class ListToGridControl : ItemsControl, INotifyPropertyChanged
     {
         private int _maxRows;
         private int _maxColumns;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         static ListToGridControl()
         {
@@ -66,8 +72,8 @@ namespace ListToGrid
                 Cells.Add(c as Cell);
             }
             // TODO: ugly
-            _maxColumns = Cells.Max(c => c.X) + 1;
-            _maxRows    = Cells.Max(c => c.Y) + 1;
+            MaxColumns = Cells.Max(c => c.X) + 1;
+            MaxRows    = Cells.Max(c => c.Y) + 1;
         }
 
         public ObservableCollection<Cell> Cells
@@ -76,7 +82,23 @@ namespace ListToGrid
             set;
         }
 
-        public int MaxColumns {  get { return _maxColumns; } }
-        public int MaxRows    {  get { return _maxRows;    } }
+        public int MaxColumns
+        {
+            get { return _maxColumns; }
+            set
+            {
+                _maxColumns = value;
+                OnPropertyChanged("MaxColumns");
+            }
+        }
+        public int MaxRows
+        {
+            get { return _maxRows;    }
+            set
+            {
+                _maxRows = value;
+                OnPropertyChanged("MaxRows");
+            }
+        }
     }
 }

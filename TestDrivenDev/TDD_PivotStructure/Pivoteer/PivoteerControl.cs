@@ -79,8 +79,6 @@ namespace Pivoteer
 
         public PivoteerControl()
         {
-            //DataContext = "{Binding Source={RelativeSource Self}, Path=CrossTableModel}"
-            //ItemsSource = "{Binding Items}"
             CrossTableModel   = new MVVM.CrossTableModel();
             RowHeaderModel    = new MVVM.RowHeadersModel();
             ColumnHeaderModel = new MVVM.ColumnHeadersModel();
@@ -92,10 +90,11 @@ namespace Pivoteer
             _columnHeadersGrid = this.GetTemplateChild("PART_ColumnHeadersTable") as ListToGridControl;
             _rowHeadersGrid    = this.GetTemplateChild("PART_RowHeadersTable") as ListToGridControl;
 
-            // TODO: don't understand exactly what's going on but it works
-            Binding b = new Binding("Cells");
-            b.Source = this;
+            Binding b = new Binding("Cells"); // Cells as source
+            b.Source = this; // outer object as Source
             b.Mode = BindingMode.OneWay;
+            // _crossTableGrid                        - inner object as target
+            // ListToGridControl.ItemsSourceProperty  - inner object itemsSource
             BindingOperations.SetBinding(_crossTableGrid, ListToGridControl.ItemsSourceProperty, b);
 
             base.OnApplyTemplate();
@@ -107,6 +106,7 @@ namespace Pivoteer
             // TODO: Split whole matrix on 3 sub-tables: RowHeaders, ColumnHeaders and Values
             _cells = new List<Cell>();
 
+
             for (int i = 0; i <= mtx.GetUpperBound(0); i++)
             {
                 for (int j = 0; j <= mtx.GetUpperBound(1); j++)
@@ -114,13 +114,10 @@ namespace Pivoteer
                     _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
                 }
             }
+
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new CrossTablePopulateMessage(_cells));
-            //_crossTableGrid.ItemsSource = Cells;
             Cells = _cells;
-
         }
-
-
 
         public List<Cell> Cells
         {

@@ -9,10 +9,16 @@
         Title="Custom Control Test" Height="350" Width="525">
     <Window.Resources>
         <local:GridModel x:Key="GridModel"/>
+        <local:NonObservableModel x:Key="NonObservableModel"/>
     </Window.Resources>
-    <Grid>
+    <StackPanel>
         <listgrid:ListToGridControl DataContext="{Binding Source={StaticResource GridModel}}"
                                     ItemsSource="{Binding}">
         </listgrid:ListToGridControl>
-    </Grid>
+
+        <listgrid:ListToGridControl DataContext="{Binding Source={StaticResource NonObservableModel}}"
+                                    ItemsSource="{Binding Items}">
+        </listgrid:ListToGridControl>
+
+    </StackPanel>
 </Window>
