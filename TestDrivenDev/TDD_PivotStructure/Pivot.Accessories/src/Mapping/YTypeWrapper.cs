@@ -32,7 +32,7 @@ namespace Pivot.Accessories.Mapping
         {
             var type = typeof(T);
 
-            maxDim = ReflectionExtensions.AttributeCount<Attributes.DimmensionX>(type);
+            maxDim = ReflectionExtensions.AttributeCount<Attributes.DimmensionY>(type);
             PivotFieldGetters = new MemberInfo[maxDim];
             AggregationFunctionsByLevel = new Func<List<decimal?>, decimal?>[maxDim];
 

@@ -36,7 +36,6 @@ namespace PivoteerWPF.Common
         public static void SaveJsonObject(string fullPath, Object obj)
         {
             JsonSerializer serializer = new JsonSerializer();
-//            serializer.Converters.Add(new JavaScriptDateTimeConverter());
             serializer.NullValueHandling = NullValueHandling.Include;
 
             using (StreamWriter sw = new StreamWriter(fullPath))
@@ -45,7 +44,7 @@ namespace PivoteerWPF.Common
                 serializer.Serialize(writer, obj);
             }
         }
-
+        #region Excel File Reading commands
         public static IEnumerable<string> RetreiveSheets(string fullPath)
         {
             IEnumerable<string> result = null;
@@ -55,7 +54,7 @@ namespace PivoteerWPF.Common
             }
             return result;
         }
-
+        #endregion
         public static Tuple<bool, string> RunOpenFileDialog(string extension, string initialPath)
         {
             bool isCancelled = false;

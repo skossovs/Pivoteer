@@ -84,18 +84,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="src\Common\AggregationFunctions.cs" />
     <Compile Include="src\Common\ApplicationCommands.cs" />
     <Compile Include="src\Common\DelegateCommand.cs" />
+    <Compile Include="src\Common\ExcelReadUtils.cs" />
     <Compile Include="src\Common\ProjectFile.cs" />
     <Compile Include="src\Converters\FullPathToFileNameConverter.cs" />
     <Compile Include="src\Data\Enums.cs" />
     <Compile Include="src\Data\ProjectOnTreeView.cs" />
     <Compile Include="src\MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="src\MVVM\CrossTableModel.cs" />
+    <Compile Include="src\MVVM\FixedMacrosModel.cs" />
     <Compile Include="src\MVVM\Messages\ExcelFileCommandMessage.cs" />
+    <Compile Include="src\MVVM\Messages\PivotCommandMessage.cs" />
     <Compile Include="src\MVVM\Messages\ProjectLoadedMessage.cs" />
     <Compile Include="src\MVVM\Messages\TreeViewPopulatedMessage.cs" />
     <Compile Include="src\MVVM\Messages\TreeViewSelectionMessage.cs" />
     <Compile Include="src\MVVM\Messages\FileCommandMessage.cs" />
+    <Compile Include="src\MVVM\PivotClassBase.cs" />
     <Compile Include="src\MVVM\ProjectExtensions.cs" />
     <Compile Include="src\MVVM\TabItemsModel.cs" />
     <Compile Include="src\MVVM\TreeNodesDataTemplateSelector.cs" />
@@ -154,6 +160,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ListToGrid\ListToGrid.csproj">
+      <Project>{afb04d7b-d40f-488c-91aa-0cf132990b30}</Project>
+      <Name>ListToGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pivot.Accessories\Pivot.Accessories.csproj">
+      <Project>{639c31a5-1b9d-4dfa-a864-66814c3e0c31}</Project>
+      <Name>Pivot.Accessories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pivoteer\Pivoteer.csproj">
+      <Project>{eeab4aaa-41e7-4834-9bd9-1ff9c58c6ad0}</Project>
+      <Name>Pivoteer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

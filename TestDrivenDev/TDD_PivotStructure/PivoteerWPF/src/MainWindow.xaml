@@ -9,12 +9,15 @@
         xmlns:vm         ="clr-namespace:PivoteerWPF.MVVM"
         xmlns:behaviours ="clr-namespace:PivoteerWPF.MVVM.Behaviors"
         xmlns:converters ="clr-namespace:PivoteerWPF.Converters"
+        xmlns:pvt        ="clr-namespace:Pivoteer;assembly=Pivoteer"
         xmlns:i          ="http://schemas.microsoft.com/expression/2010/interactivity">
     <Window.Resources>
         <vm:ShellViewModel                x:Key="ShellViewModel"></vm:ShellViewModel>
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>
+        <vm:FixedMacrosModel              x:Key="FixedMacrosModel"></vm:FixedMacrosModel>
         <vm:Group                         x:Key="TreeGroupModel"></vm:Group>
         <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
+        <vm:CrossTableModel               x:Key="PivotModel"></vm:CrossTableModel>
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
 
         <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
@@ -40,10 +43,20 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="1">
-                            <TextBlock>Verify</TextBlock>
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="2">
                             <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
@@ -79,11 +92,21 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Button    Content="Delete"                   Grid.Column="0"></Button>
-                        <Button                                       Grid.Column="1">
-                            <TextBlock>Run</TextBlock>
+                        <Button    Grid.Column="1">
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
-                        <Button                                       Grid.Column="2">
-                            <TextBlock>Verify</TextBlock>
+                        <Button    Grid.Column="2">
+                            <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
@@ -118,14 +141,29 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Button    Grid.Column="0">
-                            <TextBlock>Run</TextBlock>
+                            <TextBlock>Validate</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandValidate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                         <Button    Grid.Column="1">
-                            <TextBlock>Verify</TextBlock>
+                            <TextBlock>Run</TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding PivotCommandRun}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
                     </Grid>
                 </GroupBox>
             </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="PivotDataControlTemplate" DataType = "{x:Type ContentControl}">
+            <pvt:PivoteerControl DataContext = "{Binding Source = {StaticResource PivotModel}}"
+                                 ItemsSource = "{Binding Items}">
+            </pvt:PivoteerControl>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -136,12 +174,18 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File" DataContext="{Binding Source={StaticResource ShellViewModel}}">
-                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}" CommandParameter="NEW" />
-                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}" CommandParameter="OPEN"/>
-                    <MenuItem Header="_Save" Command="{Binding FileMenuCommand}" CommandParameter="SAVE"/>
+                <MenuItem Header="_File"   DataContext="{Binding Source={StaticResource ShellViewModel}}">
+                    <MenuItem Header="_New"  Command="{Binding FileMenuCommand}"    CommandParameter="NEW" />
+                    <MenuItem Header="_Open" Command="{Binding FileMenuCommand}"    CommandParameter="OPEN"/>
+                    <MenuItem Header="_Save" Command="{Binding FileMenuCommand}"    CommandParameter="SAVE"/>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}" CommandParameter="EXIT" />
+                    <MenuItem Header="_Exit" Command="{Binding FileMenuCommand}"    CommandParameter="EXIT" />
+                </MenuItem>
+                <MenuItem Header="_Macros" DataContext="{Binding Source={StaticResource FixedMacrosModel}}">
+                    <MenuItem Header="_Start Stock Prices"
+                                             Command="{Binding MacrosMenuCommand}"  CommandParameter="StockPrices"/>
+                    <MenuItem Header="_Start Stock MarketCap"
+                                             Command="{Binding MacrosMenuCommand}"  CommandParameter="StockMktCap"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -171,10 +215,13 @@
                 </TreeView>
                 <ContentControl Grid.Row="1"
                                 ContentTemplateSelector = "{StaticResource myDataTemplateSelector}"
-                                DataContext             = "{Binding Source={StaticResource TabItemsModel}}"
+                                DataContext             = "{Binding Source = {StaticResource TabItemsModel}}"
                                 Content                 = "{Binding SelectedNode}"/>
             </Grid>
-            <Grid Name="gridPivot" Grid.Column="1" Grid.Row="0"/>
+            <ContentControl Grid.Column     = "1"
+                            DataContext     = "{Binding Source = {StaticResource PivotModel}}"
+                            ContentTemplate = "{StaticResource PivotDataControlTemplate}">
+            </ContentControl>
         </Grid>
         <Grid Name="gridStatus" Grid.Row="2"></Grid>
     </Grid>

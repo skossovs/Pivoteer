@@ -65,7 +65,7 @@ namespace TDD_PivotStructure.PivotCoordinates
             var typeWrapper = new Pivot.Accessories.Mapping.TypeWrapper<ShopRiteSales, AggregationFunctions>();
             var generator = new PivotGenerator<ShopRiteSales, AggregationFunctions>(typeWrapper);
 
-            var mtx = generator.GeneratePivot(data);
+            var mtx = generator.GeneratePivot(data).Matrix;
             DataOutput.CSVHelper.SaveCSVFile(mtx, "ShopRitesSalesPivot.csv");
         }
 
@@ -77,7 +77,7 @@ namespace TDD_PivotStructure.PivotCoordinates
             var typeWrapper = new Pivot.Accessories.Mapping.TypeWrapper<TwoByTwo, AggregationFunctions>();
             var generator = new PivotGenerator<TwoByTwo, AggregationFunctions>(typeWrapper);
 
-            var mtx = generator.GeneratePivot(data);
+            var mtx = generator.GeneratePivot(data).Matrix;
             DataOutput.CSVHelper.SaveCSVFile(mtx, "SmallTwoByTwoMatrix.csv");
 
         }
