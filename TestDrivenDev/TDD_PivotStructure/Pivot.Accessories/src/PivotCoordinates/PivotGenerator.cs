@@ -18,7 +18,7 @@ namespace Pivot.Accessories.PivotCoordinates
             _typeWrapper = t;
             _dictionaryGenerator = new DictionaryGenerator<T, TAggregator>(t);
         }
-        public string[,] GeneratePivot(IEnumerable<T> data)
+        public GeneratedData GeneratePivot(IEnumerable<T> data)
         {
             #region STAGE I: pivot matrix with no aggregations
             var dicX = _dictionaryGenerator.GenerateXDictionary(data);
@@ -111,7 +111,12 @@ namespace Pivot.Accessories.PivotCoordinates
             }
             #endregion
 
-            return matrix;
+            var result = new GeneratedData();
+            result.Matrix = matrix;
+            result.Row_Hierarchy_Depth = _typeWrapper.YType.MaxDim;
+            result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
+
+            return result;
         }
     }
 }

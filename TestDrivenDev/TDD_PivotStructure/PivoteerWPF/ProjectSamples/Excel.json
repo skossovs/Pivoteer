@@ -5,11 +5,11 @@
       "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Stocks.xlsx",
       "Sheets": [
         {
-          "SheetName": "AMD",
+          "SheetName": "Prices",
           "ClassName": "SpotPrice"
         },
         {
-          "SheetName": "MSFT",
+          "SheetName": "MarketCap",
           "ClassName": "SpotPrice"
         }
       ]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PivoteerWPF.PivotClasses
 {
-    class Option
+    class Option : PivoteerWPF.MVVM.PivotClassBase
     {
     }
 }

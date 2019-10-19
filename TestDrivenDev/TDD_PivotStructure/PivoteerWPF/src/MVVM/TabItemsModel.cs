@@ -17,6 +17,8 @@ namespace PivoteerWPF.MVVM
         IList<TreeNode> _treeNodes;
         TreeNode        _treeNode;
         private readonly DelegateCommand<string> _addExcelFileCommand;
+        private readonly DelegateCommand<string> _pivotCommandRun;
+        private readonly DelegateCommand<string> _pivotCommandValidate;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -31,7 +33,9 @@ namespace PivoteerWPF.MVVM
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewSelectionMessage>(this, ReceiveTreeViewSelectionCommand);
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<TreeViewPopulatedMessage>(this, ReceiveTreeViewPopulatedCommand);
 
-            _addExcelFileCommand = new DelegateCommand<string>(AddExcel);
+            _addExcelFileCommand  = new DelegateCommand<string>(AddExcel);
+            _pivotCommandRun      = new DelegateCommand<string>(Run);
+            _pivotCommandValidate = new DelegateCommand<string>(Validate);
         }
         // TODO: implement Tab addition/deletion
         private void ReceiveTreeViewPopulatedCommand(TreeViewPopulatedMessage tvPopulatedMessage)
@@ -98,10 +102,57 @@ namespace PivoteerWPF.MVVM
             if(!t.Item1)
             {
                 // Send message back to TreeView
-                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ExcelFileCommandMessage(_treeNode.Key, "ADD" ,t.Item2)); // TODO: generic constant need to be in ENUM
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ExcelFileCommandMessage(_treeNode.Key, TreeNodeCommand.Add, t.Item2));
+            }
+        }
+        #region run / verify commands
+        // TODO: rename
+        public DelegateCommand<string> PivotCommandRun
+        {
+            get
+            {
+                return _pivotCommandRun;
+            }
+        }
+        public DelegateCommand<string> PivotCommandValidate
+        {
+            get
+            {
+                return _pivotCommandValidate;
             }
         }
 
+        private void Validate(string _)
+        {
+            var lstData = LoadFromExcel();
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(_treeNode.Key, lstData, TreeNodeCommand.Validate));
+        }
+        private void Run(string _)
+        {
+            var lstData = LoadFromExcel();
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new PivotCommandMessage(_treeNode.Key, lstData, TreeNodeCommand.Run));
+        }
 
+        private IEnumerable<PivotClassBase> LoadFromExcel()
+        {
+            IEnumerable<PivotClassBase> lstData = null;
+            // Load from Excel
+            var path      = _treeNode.Properties["ExcelFilePath"];
+            var sheet     = _treeNode.Properties["SheetName"];
+            var className = _treeNode.Properties["ClassName"];
+
+            switch (className)
+            {
+                case "Option":
+                    lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, "Value");
+                    break;
+                case "SpotPrice":
+                    lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, "Value"); // TODO: Magic constant, replace with attributes
+                    break;
+            }
+
+            return lstData;
+        }
+        #endregion
     }
 }
