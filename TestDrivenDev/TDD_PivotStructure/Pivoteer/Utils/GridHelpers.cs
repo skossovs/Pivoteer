@@ -4,6 +4,7 @@ using System.Windows.Controls;
 
 namespace Pivoteer.Utils
 {
+    // TODO: Do I need it?
     public class GridHelpers
     {
         #region RowCount Property

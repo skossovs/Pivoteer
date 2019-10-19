@@ -14,22 +14,10 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <listgrid:ListToGridControl Grid.Row="1" Grid.Column="0" Name="PART_RowHeadersTable">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
+                            <listgrid:ListToGridControl  Name="CrossTable">
                             </listgrid:ListToGridControl>
-                            <listgrid:ListToGridControl Grid.Row="0" Grid.Column="1" Name="PART_ColumnHeadersTable">
-                            </listgrid:ListToGridControl>
-                            <listgrid:ListToGridControl Grid.Row="1" Grid.Column="1" Name="PART_CrossTable">
-                            </listgrid:ListToGridControl>
-                        </Grid>
+                        </ScrollViewer>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

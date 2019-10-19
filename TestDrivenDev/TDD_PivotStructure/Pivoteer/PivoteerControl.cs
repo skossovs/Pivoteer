@@ -55,13 +55,10 @@ namespace Pivoteer
     {
         List<Cell> _cells;
 
-
         public MVVM.CrossTableModel    CrossTableModel   { get; private set; }
         public MVVM.RowHeadersModel    RowHeaderModel    { get; private set; }
         public MVVM.ColumnHeadersModel ColumnHeaderModel { get; private set; }
 
-        private ListToGridControl _rowHeadersGrid;
-        private ListToGridControl _columnHeadersGrid;
         private ListToGridControl _crossTableGrid;
 
         #region INotifyPropertyChanged
@@ -86,9 +83,7 @@ namespace Pivoteer
 
         public override void OnApplyTemplate()
         {
-            _crossTableGrid    = this.GetTemplateChild("PART_CrossTable") as ListToGridControl;
-            _columnHeadersGrid = this.GetTemplateChild("PART_ColumnHeadersTable") as ListToGridControl;
-            _rowHeadersGrid    = this.GetTemplateChild("PART_RowHeadersTable") as ListToGridControl;
+            _crossTableGrid    = this.GetTemplateChild("CrossTable") as ListToGridControl;
 
             Binding b = new Binding("Cells"); // Cells as source
             b.Source = this; // outer object as Source
@@ -164,9 +159,9 @@ namespace Pivoteer
 
             //var mtx = generator.GeneratePivot(data);
             var magicMethod = makeGenerator.GetMethod("GeneratePivot", new[] { genericEnumClass });
-            object mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum });
+            var mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum }) as Pivot.Accessories.PivotCoordinates.GeneratedData;
 
-            return mtxResult as string[,];
+            return mtxResult.Matrix;
         }
     }
 }
