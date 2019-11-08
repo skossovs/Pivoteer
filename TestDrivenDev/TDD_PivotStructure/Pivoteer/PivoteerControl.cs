@@ -1,4 +1,5 @@
 ﻿using ListToGrid;
+using Pivot.Accessories.PivotCoordinates;
 using Pivoteer.MVVM.Messages;
 using System;
 using System.Collections.Generic;
@@ -97,14 +98,22 @@ namespace Pivoteer
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
-            string[,] mtx = ReloadItems();
+            var data = ReloadItems();
+            string[,] mtx = data.Matrix;
             // TODO: Split whole matrix on 3 sub-tables: RowHeaders, ColumnHeaders and Values
             _cells = new List<Cell>();
 
-
-            for (int i = 0; i <= mtx.GetUpperBound(0); i++)
+            // Populate the Columns
+            data.ColumnHeaderTree.ForEach(h =>
             {
-                for (int j = 0; j <= mtx.GetUpperBound(1); j++)
+                _cells.Add(new Cell() { X=h.Index, Y=h.Level, XSpan=h.Length, Value=h.Text});
+            });
+            // Populate the Rows
+
+            // Populate the values
+            for (int i = data.Column_Hierarchy_Depth; i <= mtx.GetUpperBound(0); i++)
+            {
+                for (int j = data.Row_Hierarchy_Depth; j <= mtx.GetUpperBound(1); j++)
                 {
                     _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
                 }
@@ -126,7 +135,7 @@ namespace Pivoteer
                 OnPropertyChanged("Cells");
             }
         }
-        private string[,] ReloadItems()
+        private GeneratedData ReloadItems()
         {
             // TODO: not beautiful
             // get the item's type
@@ -159,9 +168,9 @@ namespace Pivoteer
 
             //var mtx = generator.GeneratePivot(data);
             var magicMethod = makeGenerator.GetMethod("GeneratePivot", new[] { genericEnumClass });
-            var mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum }) as Pivot.Accessories.PivotCoordinates.GeneratedData;
+            var mtxResult = magicMethod.Invoke(generator, new object[] { dataAsEnum }) as GeneratedData;
 
-            return mtxResult.Matrix;
+            return mtxResult;
         }
     }
 }

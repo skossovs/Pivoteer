@@ -18,11 +18,35 @@ namespace Pivot.Accessories.PivotCoordinates
             _typeWrapper = t;
             _dictionaryGenerator = new DictionaryGenerator<T, TAggregator>(t);
         }
+
+        private List<HeaderNode> GenerateColumnTree(SortedDictionary<FieldList, int> dicX, int depth)
+        {
+            List<HeaderNode> headerNodes = null;
+            for(int i = depth - 1; i > -1; i--)
+            {
+                // TODO: recursive traversing is needed.
+                headerNodes = dicX.GroupBy(kv => kv.Key[i])
+                    .Select(s => new HeaderNode()
+                    {
+                        Text = s.Key,
+                        Level = 0,
+                        Index = s.Min(d => d.Value),
+                        Length = s.Max(d => d.Value) - s.Min(d => d.Value)
+                    }).ToList();
+            }
+
+            return headerNodes;
+        }
+
+
         public GeneratedData GeneratePivot(IEnumerable<T> data)
         {
             #region STAGE I: pivot matrix with no aggregations
             var dicX = _dictionaryGenerator.GenerateXDictionary(data);
             var dicY = _dictionaryGenerator.GenerateYDictionary(data);
+
+            // TODO: build up column and row headers trees
+            var columnTree = GenerateColumnTree(dicX, _typeWrapper.XType.MaxDim);
 
             string[,] matrix = new string[dicX.Count + _typeWrapper.XType.MaxDim, dicY.Count + _typeWrapper.YType.MaxDim];
 
@@ -32,6 +56,7 @@ namespace Pivot.Accessories.PivotCoordinates
 
             var utilsAggregation = new AggregationTreeGenerator<T, TAggregator>(_typeWrapper);
 
+            // TODO: inner, outer matrices can be populated in parallel
             // populate decimal values (inner matrix)
             foreach (var element in data)
             {
@@ -111,10 +136,11 @@ namespace Pivot.Accessories.PivotCoordinates
             }
             #endregion
 
-            var result = new GeneratedData();
-            result.Matrix = matrix;
-            result.Row_Hierarchy_Depth = _typeWrapper.YType.MaxDim;
+            var result                    = new GeneratedData();
+            result.Matrix                 = matrix;
+            result.Row_Hierarchy_Depth    = _typeWrapper.YType.MaxDim;
             result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
+            result.ColumnHeaderTree       = columnTree.ToList();
 
             return result;
         }

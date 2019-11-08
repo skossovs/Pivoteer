@@ -31,8 +31,10 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style>
-                    <Setter Property="Grid.Row"    Value="{Binding Y}"/>
-                    <Setter Property="Grid.Column" Value="{Binding X}"/>
+                    <Setter Property="Grid.Row"        Value="{Binding Y}"/>
+                    <Setter Property="Grid.Column"     Value="{Binding X}"/>
+                    <Setter Property="Grid.ColumnSpan" Value="{Binding XSpan}"/>
+                    <Setter Property="Grid.RowSpan"    Value="{Binding YSpan}"/>
                 </Style>
             </Setter.Value>
         </Setter>
