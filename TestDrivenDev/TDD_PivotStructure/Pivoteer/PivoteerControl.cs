@@ -104,11 +104,15 @@ namespace Pivoteer
             _cells = new List<Cell>();
 
             // Populate the Columns
-            data.ColumnHeaderTree.ForEach(h =>
+            data.ColumnHeaders.ForEach(h =>
             {
                 _cells.Add(new Cell() { X=h.Index, Y=h.Level, XSpan=h.Length, Value=h.Text});
             });
             // Populate the Rows
+            data.RowHeaders.ForEach(h =>
+            {
+                _cells.Add(new Cell() { Y = h.Index, X = h.Level, YSpan = h.Length, Value = h.Text });
+            });
 
             // Populate the values
             for (int i = data.Column_Hierarchy_Depth; i <= mtx.GetUpperBound(0); i++)

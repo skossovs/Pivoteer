@@ -19,20 +19,75 @@ namespace Pivot.Accessories.PivotCoordinates
             _dictionaryGenerator = new DictionaryGenerator<T, TAggregator>(t);
         }
 
-        private List<HeaderNode> GenerateColumnTree(SortedDictionary<FieldList, int> dicX, int depth)
+
+        private List<HeaderNode> GenerateRowHeaders(SortedDictionary<FieldList, int> dicY, int depth)
         {
-            List<HeaderNode> headerNodes = null;
-            for(int i = depth - 1; i > -1; i--)
+            List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            var fieldsBuffer = dicY.OrderBy(kv => kv.Value).First().Key.Select(s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty }).ToList();
+
+            foreach (var fieldsIndex in dicY.OrderBy(kv => kv.Value))
             {
-                // TODO: recursive traversing is needed.
-                headerNodes = dicX.GroupBy(kv => kv.Key[i])
-                    .Select(s => new HeaderNode()
+                var fieldList = fieldsIndex.Key;
+
+                for (int i = 0; i < depth; i++)
+                {
+                    var newHeaderNode = new HeaderNode()
                     {
-                        Text = s.Key,
-                        Level = 0,
-                        Index = s.Min(d => d.Value),
-                        Length = s.Max(d => d.Value) - s.Min(d => d.Value)
-                    }).ToList();
+                        Index = fieldsIndex.Value,
+                        Level = depth - i, // inverse the level
+                        Text = fieldList[i],
+                        Length = 1,
+                    };
+
+                    if (fieldsBuffer[i].Text != newHeaderNode.Text || newHeaderNode.Text.Length == 0)
+                    {
+                        fieldsBuffer[i] = newHeaderNode;
+                        headerNodes.Add(newHeaderNode);
+                    }
+                    else
+                    {
+                        fieldsBuffer[i].Length++;
+                    }
+                }
+
+            }
+
+            return headerNodes;
+        }
+
+
+        private List<HeaderNode> GenerateColumnHeaders(SortedDictionary<FieldList, int> dicX, int depth)
+        {
+            List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            var fieldsBuffer = dicX.OrderBy(kv => kv.Value).First().Key.Select( s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty  }).ToList();
+
+            foreach (var fieldsIndex in dicX.OrderBy(kv => kv.Value))
+            {
+                var fieldList = fieldsIndex.Key;
+
+                for (int i=0; i < depth; i++)
+                {
+                    var newHeaderNode = new HeaderNode()
+                    {
+                        Index = fieldsIndex.Value,
+                        Level = depth - i, // inverse the level
+                        Text = fieldList[i],
+                        Length = 1,
+                    };
+
+                    if (fieldsBuffer[i].Text != newHeaderNode.Text || newHeaderNode.Text.Length == 0)
+                    {
+                        fieldsBuffer[i] = newHeaderNode;
+                        headerNodes.Add(newHeaderNode);
+                    }
+                    else
+                    {
+                        fieldsBuffer[i].Length++;
+                    }
+                }
+
             }
 
             return headerNodes;
@@ -46,7 +101,8 @@ namespace Pivot.Accessories.PivotCoordinates
             var dicY = _dictionaryGenerator.GenerateYDictionary(data);
 
             // TODO: build up column and row headers trees
-            var columnTree = GenerateColumnTree(dicX, _typeWrapper.XType.MaxDim);
+            var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
+            var rowHeaders = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
 
             string[,] matrix = new string[dicX.Count + _typeWrapper.XType.MaxDim, dicY.Count + _typeWrapper.YType.MaxDim];
 
@@ -138,9 +194,10 @@ namespace Pivot.Accessories.PivotCoordinates
 
             var result                    = new GeneratedData();
             result.Matrix                 = matrix;
-            result.Row_Hierarchy_Depth    = _typeWrapper.YType.MaxDim;
-            result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
-            result.ColumnHeaderTree       = columnTree.ToList();
+            result.Row_Hierarchy_Depth    = _typeWrapper.XType.MaxDim;
+            result.Column_Hierarchy_Depth = _typeWrapper.YType.MaxDim;
+            result.ColumnHeaders       = columnHeaders.ToList();
+            result.RowHeaders          = rowHeaders.ToList();
 
             return result;
         }
