@@ -146,8 +146,11 @@ namespace PivoteerWPF.MVVM
                 case "Option":
                     lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, "Value");
                     break;
-                case "SpotPrice":
+                case "Stock":
                     lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, "Value"); // TODO: Magic constant, replace with attributes
+                    break;
+                case "TwoByTwo":
+                    lstData = ExcelReadUtils<PivotClasses.TwoByTwo>.RetrieveSheetData(path, sheet, "Value");
                     break;
             }
 

@@ -6,14 +6,23 @@
       "Sheets": [
         {
           "SheetName": "Prices",
-          "ClassName": "SpotPrice"
+          "ClassName": "Stock"
         },
         {
           "SheetName": "MarketCap",
-          "ClassName": "SpotPrice"
+          "ClassName": "Stock"
         }
       ]
     },
+	{
+      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Symmetrical.xlsx",
+	  "Sheets": [
+        {
+          "SheetName": "2by2",
+          "ClassName": "TwoByTwo"
+        }
+      ]
+	},
     {
       "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\OptionPricing.xlsx",
       "Sheets": [

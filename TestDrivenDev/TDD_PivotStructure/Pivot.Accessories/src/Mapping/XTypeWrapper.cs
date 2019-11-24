@@ -27,7 +27,7 @@ namespace Pivot.Accessories.Mapping
                 returnValue = ((FieldInfo)PivotFieldGetters[level]).GetValue(obj);
             else
                 throw new Exception("Wrong initialization");
-            return (string) returnValue; // TODO9: Make check for correct type
+            return (string) returnValue; // TODO: Make check for correct type
         }
 
         public XTypeWrapper()

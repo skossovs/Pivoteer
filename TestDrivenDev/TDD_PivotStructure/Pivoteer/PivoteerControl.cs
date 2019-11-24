@@ -106,20 +106,20 @@ namespace Pivoteer
             // Populate the Columns
             data.ColumnHeaders.ForEach(h =>
             {
-                _cells.Add(new Cell() { X=h.Index, Y=h.Level, XSpan=h.Length, Value=h.Text});
+                _cells.Add(new Cell() { X=h.Index, Y=h.Level, XSpan=h.Length, YSpan=1, Value=h.Text});
             });
             // Populate the Rows
             data.RowHeaders.ForEach(h =>
             {
-                _cells.Add(new Cell() { Y = h.Index, X = h.Level, YSpan = h.Length, Value = h.Text });
+                _cells.Add(new Cell() { Y = h.Index, X = h.Level, YSpan = h.Length, XSpan = 1, Value = h.Text });
             });
 
             // Populate the values
-            for (int i = data.Column_Hierarchy_Depth; i <= mtx.GetUpperBound(0); i++)
+            for (int i = data.Row_Hierarchy_Depth; i <= mtx.GetUpperBound(0); i++)
             {
-                for (int j = data.Row_Hierarchy_Depth; j <= mtx.GetUpperBound(1); j++)
+                for (int j = data.Column_Hierarchy_Depth; j <= mtx.GetUpperBound(1); j++)
                 {
-                    _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j] });
+                    _cells.Add(new Cell() { X = i, Y = j, Value = mtx[i, j], YSpan=1, XSpan=1 });
                 }
             }
 

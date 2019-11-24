@@ -35,7 +35,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = depth - i, // inverse the level
+                        Level = depth - i - 1, // inverse the level TODO: make it generic
                         Text = fieldList[i],
                         Length = 1,
                     };
@@ -72,7 +72,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = depth - i, // inverse the level
+                        Level = depth - i - 1, // inverse the level TODO: make it generic
                         Text = fieldList[i],
                         Length = 1,
                     };
@@ -100,7 +100,8 @@ namespace Pivot.Accessories.PivotCoordinates
             var dicX = _dictionaryGenerator.GenerateXDictionary(data);
             var dicY = _dictionaryGenerator.GenerateYDictionary(data);
 
-            // TODO: build up column and row headers trees
+            // build up column and row headers trees
+            // TODO : in parallel
             var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
             var rowHeaders = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
 
@@ -194,8 +195,8 @@ namespace Pivot.Accessories.PivotCoordinates
 
             var result                    = new GeneratedData();
             result.Matrix                 = matrix;
-            result.Row_Hierarchy_Depth    = _typeWrapper.XType.MaxDim;
-            result.Column_Hierarchy_Depth = _typeWrapper.YType.MaxDim;
+            result.Row_Hierarchy_Depth    = _typeWrapper.YType.MaxDim;
+            result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
             result.ColumnHeaders       = columnHeaders.ToList();
             result.RowHeaders          = rowHeaders.ToList();
 
