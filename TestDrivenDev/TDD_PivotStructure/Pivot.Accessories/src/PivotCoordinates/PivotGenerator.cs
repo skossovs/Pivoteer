@@ -141,7 +141,6 @@ namespace Pivot.Accessories.PivotCoordinates
 
                 // put value in matrix
                 matrix[X, Y] = Convert.ToString(value);
-
             }
 
             // populate outer field names

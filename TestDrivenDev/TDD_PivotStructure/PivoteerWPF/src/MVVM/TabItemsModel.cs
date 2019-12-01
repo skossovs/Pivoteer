@@ -152,6 +152,11 @@ namespace PivoteerWPF.MVVM
                 case "TwoByTwo":
                     lstData = ExcelReadUtils<PivotClasses.TwoByTwo>.RetrieveSheetData(path, sheet, "Value");
                     break;
+                case "ThreeByTwo":
+                    lstData = ExcelReadUtils<PivotClasses.ThreeByTwo>.RetrieveSheetData(path, sheet, "Value");
+                    break;
+                default:
+                    throw new Exception($"{className} referenced class is not considered in switch-case");
             }
 
             return lstData;

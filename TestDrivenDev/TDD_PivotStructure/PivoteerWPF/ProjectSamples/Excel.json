@@ -14,15 +14,19 @@
         }
       ]
     },
-	{
+    {
       "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Symmetrical.xlsx",
-	  "Sheets": [
+      "Sheets": [
         {
           "SheetName": "2by2",
           "ClassName": "TwoByTwo"
+        },
+        {
+          "SheetName": "3by2",
+          "ClassName": "ThreeByTwo"
         }
       ]
-	},
+    },
     {
       "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\OptionPricing.xlsx",
       "Sheets": [
