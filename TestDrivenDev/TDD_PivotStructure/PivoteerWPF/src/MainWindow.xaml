@@ -223,6 +223,14 @@
                             ContentTemplate = "{StaticResource PivotDataControlTemplate}">
             </ContentControl>
         </Grid>
-        <Grid Name="gridStatus" Grid.Row="2"></Grid>
+        <Grid Name="gridStatus" Grid.Row="2">
+            <RichTextBox Name="richLog">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="Something"/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
     </Grid>
 </Window>

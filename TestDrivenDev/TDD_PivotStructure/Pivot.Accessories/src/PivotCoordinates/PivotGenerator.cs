@@ -105,7 +105,7 @@ namespace Pivot.Accessories.PivotCoordinates
             var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
             var rowHeaders = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
 
-            string[,] matrix = new string[dicX.Count + _typeWrapper.XType.MaxDim, dicY.Count + _typeWrapper.YType.MaxDim];
+            string[,] matrix = new string[dicX.Count + _typeWrapper.YType.MaxDim, dicY.Count + _typeWrapper.XType.MaxDim];
 
             Func<T, int, string> getterFuncX  = (obj, j) => _typeWrapper.XType.GetField(obj, j);
             Func<T, int, string> getterFuncY  = (obj, j) => _typeWrapper.YType.GetField(obj, j);

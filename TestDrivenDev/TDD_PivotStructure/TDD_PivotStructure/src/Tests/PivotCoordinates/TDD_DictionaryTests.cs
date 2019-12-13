@@ -21,7 +21,7 @@ namespace TDD_PivotStructure.PivotCoordinates
 
             var dirX = generator.GenerateXDictionary(data);
 
-            Assert.AreEqual(192, dirX.Count); // expecting exact amount for combinations
+            Assert.AreEqual(65, dirX.Count); // expecting exact amount for combinations
         }
 
         [TestMethod]
@@ -34,10 +34,8 @@ namespace TDD_PivotStructure.PivotCoordinates
 
             var dirY = generator.GenerateYDictionary(data);
 
-            Assert.AreEqual(144, dirY.Count); // expecting exact amount for combinations
+            Assert.AreEqual(51, dirY.Count); // expecting exact amount for combinations
         }
-
-
 
         [TestMethod]
         public void TestBuildOrderBy()
