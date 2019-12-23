@@ -1,4 +1,5 @@
-﻿using Pivot.Accessories.Mapping;
+﻿using NLog;
+using Pivot.Accessories.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,23 @@ namespace Pivot.Accessories.PivotCoordinates
     {
         DictionaryGenerator<T, TAggregator> _dictionaryGenerator;
         TypeWrapper<T, TAggregator> _typeWrapper;
+        static Logger logger;
+
+        static PivotGenerator()
+        {
+            logger = LogManager.GetCurrentClassLogger();
+        }
         public PivotGenerator(TypeWrapper<T, TAggregator> t)
         {
             _typeWrapper = t;
             _dictionaryGenerator = new DictionaryGenerator<T, TAggregator>(t);
         }
 
-
         private List<HeaderNode> GenerateRowHeaders(SortedDictionary<FieldList, int> dicY, int depth)
         {
             List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            logger.Info($"Received the following row metrics: Row Depth = {depth}, RowHeaders Count = {dicY.Count}");
 
             var fieldsBuffer = dicY.OrderBy(kv => kv.Value).First().Key.Select(s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty }).ToList();
 
@@ -56,10 +64,11 @@ namespace Pivot.Accessories.PivotCoordinates
             return headerNodes;
         }
 
-
         private List<HeaderNode> GenerateColumnHeaders(SortedDictionary<FieldList, int> dicX, int depth)
         {
             List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            logger.Info($"Received the following column metrics: Column Depth = {depth}, ColumnHeaders Count = {dicX.Count}");
 
             var fieldsBuffer = dicX.OrderBy(kv => kv.Value).First().Key.Select( s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty  }).ToList();
 
@@ -93,13 +102,13 @@ namespace Pivot.Accessories.PivotCoordinates
             return headerNodes;
         }
 
-
         public GeneratedData GeneratePivot(IEnumerable<T> data)
         {
             #region STAGE I: pivot matrix with no aggregations
             var dicX = _dictionaryGenerator.GenerateXDictionary(data);
             var dicY = _dictionaryGenerator.GenerateYDictionary(data);
 
+            logger.Info("*** Generate new pivot ***");
             // build up column and row headers trees
             // TODO : in parallel
             var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
