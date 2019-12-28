@@ -10,7 +10,7 @@
         xmlns:behaviours ="clr-namespace:PivoteerWPF.MVVM.Behaviors"
         xmlns:converters ="clr-namespace:PivoteerWPF.Converters"
         xmlns:pvt        ="clr-namespace:Pivoteer;assembly=Pivoteer"
-        xmlns:i          ="http://schemas.microsoft.com/expression/2010/interactivity">
+        xmlns:i          ="http://schemas.microsoft.com/expression/2010/interactivity" Icon="/PivoteerWPF;component/MainForm.ico" ShowInTaskbar="False">
     <Window.Resources>
         <vm:ShellViewModel                x:Key="ShellViewModel"></vm:ShellViewModel>
         <vm:FileTreeViewModel             x:Key="FileTreeViewModel"></vm:FileTreeViewModel>

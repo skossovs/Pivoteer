@@ -112,9 +112,9 @@ namespace Pivot.Accessories.PivotCoordinates
             // build up column and row headers trees
             // TODO : in parallel
             var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
-            var rowHeaders = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
+            var rowHeaders    = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
 
-            string[,] matrix = new string[dicX.Count + _typeWrapper.YType.MaxDim, dicY.Count + _typeWrapper.XType.MaxDim];
+            string[,] matrix  = new string[dicX.Count + _typeWrapper.YType.MaxDim, dicY.Count + _typeWrapper.XType.MaxDim];
 
             Func<T, int, string> getterFuncX  = (obj, j) => _typeWrapper.XType.GetField(obj, j);
             Func<T, int, string> getterFuncY  = (obj, j) => _typeWrapper.YType.GetField(obj, j);
@@ -184,16 +184,16 @@ namespace Pivot.Accessories.PivotCoordinates
             #endregion
 
             #region STAGE III: Traverse matrix
-            // Traverse by X
-            for (int x = _typeWrapper.XType.MaxDim; x < dicX.Count + _typeWrapper.XType.MaxDim; x++)
+            // For each calcullable column or X create getters/setters functions calculating by-Y-summary values
+            for (int x = _typeWrapper.XType.MaxDim - 1; x < (dicX.Count - 1) + _typeWrapper.XType.MaxDim; x++)
             {
                 mmy.getValue = utilsAggregation.CreateYGetter(x, matrix);
                 mmy.setValue = utilsAggregation.CreateYSetter(x, matrix);
                 daY.DrillDownTree(mmy);
             }
 
-            // Traverse by Y
-            for (int y = _typeWrapper.YType.MaxDim; y < dicY.Count + _typeWrapper.YType.MaxDim; y++)
+            // For each calcullable row or Y create getters/setters functions calculating by-X-summary values
+            for (int y = _typeWrapper.YType.MaxDim - 1; y < (dicY.Count - 1) + _typeWrapper.YType.MaxDim; y++)
             {
                 mmx.getValue = utilsAggregation.CreateXGetter(y, matrix);
                 mmx.setValue = utilsAggregation.CreateXSetter(y, matrix);
@@ -205,8 +205,8 @@ namespace Pivot.Accessories.PivotCoordinates
             result.Matrix                 = matrix;
             result.Row_Hierarchy_Depth    = _typeWrapper.YType.MaxDim;
             result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
-            result.ColumnHeaders       = columnHeaders.ToList();
-            result.RowHeaders          = rowHeaders.ToList();
+            result.ColumnHeaders          = columnHeaders.ToList();
+            result.RowHeaders             = rowHeaders.ToList();
 
             return result;
         }

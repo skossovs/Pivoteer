@@ -53,11 +53,17 @@ namespace Pivot.Accessories
             IEnumerable<AggregationTreeNode> q;
 
             q = GenerateLevelTree(state.level, state.dictionary);
-
-            if (isYFork && typeWrapper.YType.IndexMaxDim != state.level)
-                q = FilterOutExtra(state, q);
-            else if (typeWrapper.XType.IndexMaxDim != state.level)
-                q = FilterOutExtra(state, q);
+            // TODO: ugly
+            if (isYFork)
+            {
+                if (typeWrapper.YType.IndexMaxDim != state.level)
+                    q = FilterOutExtra(state, q);
+            }
+            else
+            {
+                if (typeWrapper.XType.IndexMaxDim != state.level)
+                    q = FilterOutExtra(state, q);
+            }
 
             AggregationTreeNode previousState = null;
 
