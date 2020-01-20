@@ -143,12 +143,21 @@ namespace PivoteerWPF.MVVM
 
             switch (className)
             {
-                case "Option":
+                case "OptionPrice":
+                    throw new Exception("OptionPrice is not implemented actually, TODO: excel is not populated.");
                     lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, "Value");
                     break;
-                case "SpotPrice":
+                case "Stock":
                     lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, "Value"); // TODO: Magic constant, replace with attributes
                     break;
+                case "TwoByTwo":
+                    lstData = ExcelReadUtils<PivotClasses.TwoByTwo>.RetrieveSheetData(path, sheet, "Value");
+                    break;
+                case "ThreeByTwo":
+                    lstData = ExcelReadUtils<PivotClasses.ThreeByTwo>.RetrieveSheetData(path, sheet, "Value");
+                    break;
+                default:
+                    throw new Exception($"{className} referenced class is not considered in switch-case");
             }
 
             return lstData;

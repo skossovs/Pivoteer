@@ -44,7 +44,7 @@ namespace Pivot.Accessories.PivotCoordinates
 
             ieResult = ieResult.OrderBy(t => t.FieldList);
 
-            int ix = typeWrapper.XType.MaxDim; // immediate shift
+            int ix = typeWrapper.YType.MaxDim; // immediate shift
             var sortedX = new SortedDictionary<FieldList, int>(new SortFieldListAscendingHelper<FieldList>());
             ieResult.ToList().ForEach(t => sortedX.Add(t.FieldList, ix++));
 
@@ -80,7 +80,7 @@ namespace Pivot.Accessories.PivotCoordinates
 
             ieResult = ieResult.OrderBy(t => t.FieldList);
 
-            int iy = typeWrapper.YType.MaxDim; // immediate shift
+            int iy = typeWrapper.XType.MaxDim; // immediate shift
             var sortedY = new SortedDictionary<FieldList, int>();
             ieResult.ToList().ForEach(t => sortedY.Add(t.FieldList, iy++));
 
