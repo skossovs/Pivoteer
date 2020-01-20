@@ -1,4 +1,5 @@
-﻿using Pivot.Accessories.Mapping;
+﻿using NLog;
+using Pivot.Accessories.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,107 @@ namespace Pivot.Accessories.PivotCoordinates
     {
         DictionaryGenerator<T, TAggregator> _dictionaryGenerator;
         TypeWrapper<T, TAggregator> _typeWrapper;
+        static Logger logger;
+
+        static PivotGenerator()
+        {
+            logger = LogManager.GetCurrentClassLogger();
+        }
         public PivotGenerator(TypeWrapper<T, TAggregator> t)
         {
             _typeWrapper = t;
             _dictionaryGenerator = new DictionaryGenerator<T, TAggregator>(t);
         }
+
+        private List<HeaderNode> GenerateRowHeaders(SortedDictionary<FieldList, int> dicY, int depth)
+        {
+            List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            logger.Info($"Received the following row metrics: Row Depth = {depth}, RowHeaders Count = {dicY.Count}");
+
+            var fieldsBuffer = dicY.OrderBy(kv => kv.Value).First().Key.Select(s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty }).ToList();
+
+            foreach (var fieldsIndex in dicY.OrderBy(kv => kv.Value))
+            {
+                var fieldList = fieldsIndex.Key;
+
+                for (int i = 0; i < depth; i++)
+                {
+                    var newHeaderNode = new HeaderNode()
+                    {
+                        Index = fieldsIndex.Value,
+                        Level = depth - i - 1, // inverse the level TODO: make it generic
+                        Text = fieldList[i],
+                        Length = 1,
+                    };
+
+                    if (fieldsBuffer[i].Text != newHeaderNode.Text || newHeaderNode.Text.Length == 0)
+                    {
+                        fieldsBuffer[i] = newHeaderNode;
+                        headerNodes.Add(newHeaderNode);
+                    }
+                    else
+                    {
+                        fieldsBuffer[i].Length++;
+                    }
+                }
+
+            }
+
+            return headerNodes;
+        }
+
+        private List<HeaderNode> GenerateColumnHeaders(SortedDictionary<FieldList, int> dicX, int depth)
+        {
+            List<HeaderNode> headerNodes = new List<HeaderNode>();
+
+            logger.Info($"Received the following column metrics: Column Depth = {depth}, ColumnHeaders Count = {dicX.Count}");
+
+            var fieldsBuffer = dicX.OrderBy(kv => kv.Value).First().Key.Select( s => new HeaderNode() { Index = -1, Length = -1, Level = -1, Text = string.Empty  }).ToList();
+
+            foreach (var fieldsIndex in dicX.OrderBy(kv => kv.Value))
+            {
+                var fieldList = fieldsIndex.Key;
+
+                for (int i=0; i < depth; i++)
+                {
+                    var newHeaderNode = new HeaderNode()
+                    {
+                        Index = fieldsIndex.Value,
+                        Level = depth - i - 1, // inverse the level TODO: make it generic
+                        Text = fieldList[i],
+                        Length = 1,
+                    };
+
+                    if (fieldsBuffer[i].Text != newHeaderNode.Text || newHeaderNode.Text.Length == 0)
+                    {
+                        fieldsBuffer[i] = newHeaderNode;
+                        headerNodes.Add(newHeaderNode);
+                    }
+                    else
+                    {
+                        fieldsBuffer[i].Length++;
+                    }
+                }
+
+            }
+
+            return headerNodes;
+        }
+
         public GeneratedData GeneratePivot(IEnumerable<T> data)
         {
             #region STAGE I: pivot matrix with no aggregations
             var dicX = _dictionaryGenerator.GenerateXDictionary(data);
             var dicY = _dictionaryGenerator.GenerateYDictionary(data);
 
-            string[,] matrix = new string[dicX.Count + _typeWrapper.XType.MaxDim, dicY.Count + _typeWrapper.YType.MaxDim];
+            logger.Info("*** Generate new pivot ***");
+            // build up column and row headers trees
+            // TODO : in parallel
+            var columnHeaders = GenerateColumnHeaders(dicX, _typeWrapper.XType.MaxDim);
+            var rowHeaders    = GenerateRowHeaders(dicY, _typeWrapper.YType.MaxDim);
+
+            string[,] matrix  = new string[dicX.Count + _typeWrapper.YType.MaxDim, dicY.Count + _typeWrapper.XType.MaxDim];
 
             Func<T, int, string> getterFuncX  = (obj, j) => _typeWrapper.XType.GetField(obj, j);
             Func<T, int, string> getterFuncY  = (obj, j) => _typeWrapper.YType.GetField(obj, j);
@@ -32,6 +122,7 @@ namespace Pivot.Accessories.PivotCoordinates
 
             var utilsAggregation = new AggregationTreeGenerator<T, TAggregator>(_typeWrapper);
 
+            // TODO: inner, outer matrices can be populated in parallel
             // populate decimal values (inner matrix)
             foreach (var element in data)
             {
@@ -59,7 +150,6 @@ namespace Pivot.Accessories.PivotCoordinates
 
                 // put value in matrix
                 matrix[X, Y] = Convert.ToString(value);
-
             }
 
             // populate outer field names
@@ -93,17 +183,17 @@ namespace Pivot.Accessories.PivotCoordinates
             var daY = new DimmensionAggregator(aggYSeedTree);
             #endregion
 
-            #region STAGE III: Traverse matrix
-            // Traverse by X
-            for (int x = _typeWrapper.XType.MaxDim; x < dicX.Count + _typeWrapper.XType.MaxDim; x++)
+            #region STAGE III: Traverse matrix and calculate aggregations
+            // For each calcullable column or X create getters/setters functions calculating by-Y-summary values
+            for (int x = _typeWrapper.XType.MaxDim - 1; x < (dicX.Count - 1) + _typeWrapper.XType.MaxDim; x++)
             {
                 mmy.getValue = utilsAggregation.CreateYGetter(x, matrix);
                 mmy.setValue = utilsAggregation.CreateYSetter(x, matrix);
                 daY.DrillDownTree(mmy);
             }
 
-            // Traverse by Y
-            for (int y = _typeWrapper.YType.MaxDim; y < dicY.Count + _typeWrapper.YType.MaxDim; y++)
+            // For each calcullable row or Y create getters/setters functions calculating by-X-summary values
+            for (int y = _typeWrapper.YType.MaxDim - 1; y < (dicY.Count - 1) + _typeWrapper.YType.MaxDim; y++)
             {
                 mmx.getValue = utilsAggregation.CreateXGetter(y, matrix);
                 mmx.setValue = utilsAggregation.CreateXSetter(y, matrix);
@@ -111,10 +201,12 @@ namespace Pivot.Accessories.PivotCoordinates
             }
             #endregion
 
-            var result = new GeneratedData();
-            result.Matrix = matrix;
-            result.Row_Hierarchy_Depth = _typeWrapper.YType.MaxDim;
+            var result                    = new GeneratedData();
+            result.Matrix                 = matrix;
+            result.Row_Hierarchy_Depth    = _typeWrapper.YType.MaxDim;
             result.Column_Hierarchy_Depth = _typeWrapper.XType.MaxDim;
+            result.ColumnHeaders          = columnHeaders.ToList();
+            result.RowHeaders             = rowHeaders.ToList();
 
             return result;
         }

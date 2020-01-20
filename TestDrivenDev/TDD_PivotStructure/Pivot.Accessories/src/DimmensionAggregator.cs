@@ -42,9 +42,8 @@ namespace Pivot.Accessories
             {
                 foreach(var tn in tnUpper.Children)
                 {
-                    decimal? aggValue;
                     var aggState = DrillDownBranchRecursive(tn, manipulator);
-                    aggValue = manipulator.AggregationFunctionVector[tn.Level](aggState.LevelValues);
+                    var aggValue = manipulator.AggregationFunctionVector[tn.Level](aggState.LevelValues);
                     stateUpperDesignated.LevelValues.Add(aggValue); // pass to upper
                     stateUpperDesignated.TreeNodes.Add(tn);
                     manipulator.setValue(tn.Dimmension, aggValue);

@@ -52,39 +52,40 @@ namespace Pivot.Accessories
         {
             IEnumerable<AggregationTreeNode> q;
 
-            if(isYFork)
+            q = GenerateLevelTree(state.level, state.dictionary);
+
+            if (isYFork)
             {
-                q = GenerateYLevelTree(state.level, state.dictionary);
                 if (typeWrapper.YType.IndexMaxDim != state.level)
-                {
-                    q = q.Where(t1 => t1.Dimmension < state.attUpper.Dimmension)
-                         .Where(t1 => t1.Dimmension > (state.previous?.Dimmension ?? 0));
-                }
+                    q = FilterOutExtra(state.attUpper, state.previous, q);
             }
             else
             {
-                q = GenerateXLevelTree(state.level, state.dictionary);
                 if (typeWrapper.XType.IndexMaxDim != state.level)
-                { // TODO: copy-paste
-                    q = q.Where(t1 => t1.Dimmension < state.attUpper.Dimmension)
-                         .Where(t1 => t1.Dimmension > (state.previous?.Dimmension ?? 0));
-                }
+                    q = FilterOutExtra(state.attUpper, state.previous, q);
             }
 
-            AggregationTreeNode previousState = null;
+            AggregationTreeNode previousAggregationTreeNode = state.previous; // establish starting point from upper level
 
-            foreach (var at in q)
+            foreach (var aggregationTreeNode in q)
             {
-                state.attUpper.Children.Add(at);
+                state.attUpper.Children.Add(aggregationTreeNode);
                 if (state.level > 0)
                 {
-                    var lowerState = new State() { attUpper = at, level = state.level - 1, dictionary = state.dictionary, previous = previousState };
+                    var lowerState = new State() { attUpper = aggregationTreeNode, level = state.level - 1, dictionary = state.dictionary, previous = previousAggregationTreeNode };
                     GenerateAggregationTreeRecursive(lowerState, isYFork);
                 }
-                previousState = at;  // Counterintuitive moment here... NEED TO PRESERVE PREVIOUS STATE ALL OVER THE LEVELS !!!!!!
+                previousAggregationTreeNode = aggregationTreeNode;  // establish starting point from the sibling
             }
 
             return state.attUpper;
+        }
+
+        private static IEnumerable<AggregationTreeNode> FilterOutExtra(AggregationTreeNode upperNode, AggregationTreeNode previousNode, IEnumerable<AggregationTreeNode> q)
+        {
+            q = q.Where(t1 => t1.Dimmension < upperNode.Dimmension)
+                 .Where(t1 => t1.Dimmension > (previousNode?.Dimmension ?? 0));
+            return q;
         }
 
         #region functors
@@ -113,10 +114,9 @@ namespace Pivot.Accessories
         }
         #endregion
 
-        // TODO: no need to have 2 different functions, they do the same
-        private IEnumerable<AggregationTreeNode> GenerateYLevelTree(int level, SortedDictionary<FieldList, int> dicY)
+        private IEnumerable<AggregationTreeNode> GenerateLevelTree(int level, SortedDictionary<FieldList, int> dic)
         {
-            IEnumerable<AggregationTreeNode> q = dicY
+            IEnumerable<AggregationTreeNode> q = dic
                 .Where(s => s.Key.GetReverseRank() == level)
                 .OrderBy(t => t.Key)
                 .Select(a => new AggregationTreeNode
@@ -129,19 +129,6 @@ namespace Pivot.Accessories
             foreach (var t in q)
                 yield return t;
         }
-        private IEnumerable<AggregationTreeNode> GenerateXLevelTree(int level, SortedDictionary<FieldList, int> dicX)
-        {
-            IEnumerable<AggregationTreeNode> q = dicX
-                .Where(s => s.Key.GetReverseRank() == level)
-                .OrderBy(t => t.Key)
-                .Select(a => new AggregationTreeNode {
-                    Dimmension = a.Value,
-                    Level = level,
-                    Children = (level > 0) ? new List<AggregationTreeNode>() : null
-                });
 
-            foreach (var t in q)
-                yield return t;
-        }
     }
 }

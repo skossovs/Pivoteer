@@ -27,10 +27,12 @@ namespace PivoteerWPF.Common
                 //Read the first Sheet from Excel file.
                 var workSheet = workBook.Worksheets.Where(s => s.Name == sheetName).FirstOrDefault();
                 //Create a new DataTable.
-                //Loop through the Worksheet rows.
+                //Loop through the Worksheet rows. Exit when encounter first empty row
                 bool firstRow = true;
                 foreach (IXLRow row in workSheet.Rows())
                 {
+                    if (row.IsEmpty())
+                        break;
                     //Use the first row to add columns to DataTable.
                     if (firstRow)
                     {

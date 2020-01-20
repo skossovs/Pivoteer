@@ -10,6 +10,8 @@ namespace ListToGrid
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public int XSpan { get; set; }
+        public int YSpan { get; set; }
         public string Value { get; set; }
     }
 }
