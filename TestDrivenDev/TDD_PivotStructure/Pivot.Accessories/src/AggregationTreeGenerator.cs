@@ -53,38 +53,38 @@ namespace Pivot.Accessories
             IEnumerable<AggregationTreeNode> q;
 
             q = GenerateLevelTree(state.level, state.dictionary);
-            // TODO: ugly
+
             if (isYFork)
             {
                 if (typeWrapper.YType.IndexMaxDim != state.level)
-                    q = FilterOutExtra(state, q);
+                    q = FilterOutExtra(state.attUpper, state.previous, q);
             }
             else
             {
                 if (typeWrapper.XType.IndexMaxDim != state.level)
-                    q = FilterOutExtra(state, q);
+                    q = FilterOutExtra(state.attUpper, state.previous, q);
             }
 
-            AggregationTreeNode previousState = null;
+            AggregationTreeNode previousAggregationTreeNode = state.previous; // establish starting point from upper level
 
-            foreach (var at in q)
+            foreach (var aggregationTreeNode in q)
             {
-                state.attUpper.Children.Add(at);
+                state.attUpper.Children.Add(aggregationTreeNode);
                 if (state.level > 0)
                 {
-                    var lowerState = new State() { attUpper = at, level = state.level - 1, dictionary = state.dictionary, previous = previousState };
+                    var lowerState = new State() { attUpper = aggregationTreeNode, level = state.level - 1, dictionary = state.dictionary, previous = previousAggregationTreeNode };
                     GenerateAggregationTreeRecursive(lowerState, isYFork);
                 }
-                previousState = at;  // Counterintuitive moment here... NEED TO PRESERVE PREVIOUS STATE ALL OVER THE LEVELS !!!!!!
+                previousAggregationTreeNode = aggregationTreeNode;  // establish starting point from the sibling
             }
 
             return state.attUpper;
         }
 
-        private static IEnumerable<AggregationTreeNode> FilterOutExtra(State state, IEnumerable<AggregationTreeNode> q)
+        private static IEnumerable<AggregationTreeNode> FilterOutExtra(AggregationTreeNode upperNode, AggregationTreeNode previousNode, IEnumerable<AggregationTreeNode> q)
         {
-            q = q.Where(t1 => t1.Dimmension < state.attUpper.Dimmension)
-                 .Where(t1 => t1.Dimmension > (state.previous?.Dimmension ?? 0));
+            q = q.Where(t1 => t1.Dimmension < upperNode.Dimmension)
+                 .Where(t1 => t1.Dimmension > (previousNode?.Dimmension ?? 0));
             return q;
         }
 

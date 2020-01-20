@@ -183,7 +183,7 @@ namespace Pivot.Accessories.PivotCoordinates
             var daY = new DimmensionAggregator(aggYSeedTree);
             #endregion
 
-            #region STAGE III: Traverse matrix
+            #region STAGE III: Traverse matrix and calculate aggregations
             // For each calcullable column or X create getters/setters functions calculating by-Y-summary values
             for (int x = _typeWrapper.XType.MaxDim - 1; x < (dicX.Count - 1) + _typeWrapper.XType.MaxDim; x++)
             {
