@@ -54,6 +54,7 @@
     <Compile Include="src\Attributes\Values.cs" />
     <Compile Include="src\Common\Clonning.cs" />
     <Compile Include="src\Common\Composition.cs" />
+    <Compile Include="src\Extensions\MappingUtilsExtensions.cs" />
     <Compile Include="src\Extensions\ReflectionExtensions.cs" />
     <Compile Include="src\Mapping\TypeWrapper.cs" />
     <Compile Include="src\Mapping\ValueTypeWrapper.cs" />

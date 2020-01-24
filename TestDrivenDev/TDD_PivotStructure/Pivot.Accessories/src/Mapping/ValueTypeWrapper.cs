@@ -18,7 +18,7 @@ namespace Pivot.Accessories.Mapping
                 returnValue = ((FieldInfo)PivotValueGetter).GetValue(obj);
             else
                 throw new Exception("Wrong initialization");
-            return (decimal?) returnValue;  // TODO9: Make check for correct type
+            return (decimal?) returnValue;  // TODO: Make check for correct type
         }
 
         public ValueTypeWrapper()

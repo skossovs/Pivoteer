@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Pivot.Accessories.Extensions;
 using System.Linq.Expressions;
+using Pivot.Accessories.src.Extensions;
 
 namespace Pivot.Accessories.Mapping
 {
@@ -40,7 +41,7 @@ namespace Pivot.Accessories.Mapping
             foreach (var t in GenerateAttributeList(type))
             {
                 PivotFieldGetters          [t.Item1.Level] = t.Item2;
-                AggregationFunctionsByLevel[t.Item1.Level] = ExtractAggregationMethod(typeof(TAggregator), t.Item1.AggregationFuncName);
+                AggregationFunctionsByLevel[t.Item1.Level] = MappingUtilsExtensions.ExtractAggregationMethod(typeof(TAggregator), t.Item1.AggregationFuncName);
             }
         }
 
@@ -57,17 +58,5 @@ namespace Pivot.Accessories.Mapping
                     yield return Tuple.Create(attributesX[0], member); // add attribute itself and field name
             }
         }
-        // TODO: wrong place
-        private Func<IEnumerable<decimal?>, decimal?> ExtractAggregationMethod(Type t, string methodName)
-        {
-            var inputList = Expression.Parameter(typeof(IEnumerable<decimal?>), "inputList");
-            var methodStatic = t.GetMethod(methodName);
-            var methodCallExpression = Expression.Call(methodStatic, inputList);
-            var aggregationFunction = Expression.Lambda<Func<IEnumerable<decimal?>, decimal?>>(methodCallExpression, inputList)
-                            .Compile();
-            return aggregationFunction;
-        }
-
-
     }
 }

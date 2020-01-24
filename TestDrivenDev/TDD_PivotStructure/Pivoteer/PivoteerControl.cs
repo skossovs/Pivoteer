@@ -100,7 +100,6 @@ namespace Pivoteer
         {
             var data = ReloadItems();
             string[,] mtx = data.Matrix;
-            // TODO: Split whole matrix on 3 sub-tables: RowHeaders, ColumnHeaders and Values
             _cells = new List<Cell>();
 
             // Populate the Columns

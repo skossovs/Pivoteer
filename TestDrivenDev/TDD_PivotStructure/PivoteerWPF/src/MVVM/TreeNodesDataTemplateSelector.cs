@@ -32,7 +32,7 @@ namespace PivoteerWPF.MVVM
                     case TreeNodeType.ExcelSheet:
                         return element.TryFindResource(TEMPLATE_KEY_SHEET) as DataTemplate;
                     case TreeNodeType.Invalid:
-                        throw new NotImplementedException("TODO: Invalid case must be implemented!!");
+                        throw new NotImplementedException("Invalid node template encountered!!");
                 }
             }
 

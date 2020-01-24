@@ -74,8 +74,9 @@ namespace PivoteerWPF.Common
             bool isCancelled = false;
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.InitialDirectory = path;
+            saveFileDialog.DefaultExt = ".json"; // TODO: extension filter is not working
+            saveFileDialog.Filter = "JSON documents (.json)|*.json";
             saveFileDialog.AddExtension = true;
-            saveFileDialog.DefaultExt = "json"; // TODO: extension filter is not working
 
             if (saveFileDialog.ShowDialog() == true)
             {
