@@ -24,14 +24,14 @@ namespace Pivoteer
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
     ///
     /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
+    /// Add this XmlNamespace attribute to the root element of the markup file where it is
     /// to be used:
     ///
     ///     xmlns:MyNamespace="clr-namespace:Pivoteer"
     ///
     ///
     /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
+    /// Add this XmlNamespace attribute to the root element of the markup file where it is
     /// to be used:
     ///
     ///     xmlns:MyNamespace="clr-namespace:Pivoteer;assembly=Pivoteer"
@@ -154,7 +154,7 @@ namespace Pivoteer
             var makeTypeWrapper = typeWrapperType.MakeGenericType(typeArgs);
             object typeWrapper = Activator.CreateInstance(makeTypeWrapper);
 
-            Type generatorType = typeof(Pivot.Accessories.PivotCoordinates.PivotGenerator<,>);
+            Type generatorType = typeof(PivotGenerator<,>);
             Type[] typeArgs1 = { TObjectType, (aggregationType.Value as Type) };
             var makeGenerator = generatorType.MakeGenericType(typeArgs1);
             object generator = Activator.CreateInstance(makeGenerator, typeWrapper);

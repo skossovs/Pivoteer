@@ -1,5 +1,6 @@
 ﻿using NLog;
 using Pivot.Accessories.Mapping;
+using Pivot.Accessories.src.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = depth - i - 1, // inverse the level TODO: make it generic
+                        Level = IndeciesExtensions.InverseIndex(depth, i),
                         Text = fieldList[i],
                         Length = 1,
                     };
@@ -81,7 +82,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = depth - i - 1, // inverse the level TODO: make it generic
+                        Level = IndeciesExtensions.InverseIndex(depth, i),
                         Text = fieldList[i],
                         Length = 1,
                     };
