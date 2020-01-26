@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pivot.Accessories.src.Extensions
 {
-    public class IndeciesExtensions
+    public static class IndicesExtensions
     {
         public static int InverseIndex(int maxValue, int index)
         {

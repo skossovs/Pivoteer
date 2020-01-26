@@ -147,7 +147,7 @@ namespace Pivoteer
             // get Aggregation Functions class
             var customAttributes = TObjectType.CustomAttributes;
             var aggregationType = customAttributes.FirstOrDefault(t => t.AttributeType.Name == "Aggregators")
-                .NamedArguments.FirstOrDefault().TypedValue;
+                .NamedArguments.FirstOrDefault().TypedValue; // TODO: what if not => report error
             // create classes dynamically
             Type   typeWrapperType = typeof(Pivot.Accessories.Mapping.TypeWrapper<,>);
             Type[] typeArgs = { TObjectType, (aggregationType.Value as Type) };

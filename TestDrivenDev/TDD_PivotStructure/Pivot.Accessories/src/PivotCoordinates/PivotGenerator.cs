@@ -15,12 +15,8 @@ namespace Pivot.Accessories.PivotCoordinates
     {
         DictionaryGenerator<T, TAggregator> _dictionaryGenerator;
         TypeWrapper<T, TAggregator> _typeWrapper;
-        static Logger logger;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        static PivotGenerator()
-        {
-            logger = LogManager.GetCurrentClassLogger();
-        }
         public PivotGenerator(TypeWrapper<T, TAggregator> t)
         {
             _typeWrapper = t;
@@ -44,7 +40,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = IndeciesExtensions.InverseIndex(depth, i),
+                        Level = IndicesExtensions.InverseIndex(depth, i),
                         Text = fieldList[i],
                         Length = 1,
                     };
@@ -82,7 +78,7 @@ namespace Pivot.Accessories.PivotCoordinates
                     var newHeaderNode = new HeaderNode()
                     {
                         Index = fieldsIndex.Value,
-                        Level = IndeciesExtensions.InverseIndex(depth, i),
+                        Level = IndicesExtensions.InverseIndex(depth, i),
                         Text = fieldList[i],
                         Length = 1,
                     };

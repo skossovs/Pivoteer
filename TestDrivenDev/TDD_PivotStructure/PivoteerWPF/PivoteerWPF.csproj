@@ -102,6 +102,7 @@
     <Compile Include="src\Common\AggregationFunctions.cs" />
     <Compile Include="src\Common\ApplicationCommands.cs" />
     <Compile Include="src\Common\DelegateCommand.cs" />
+    <Compile Include="src\Common\ExcelContentConstants.cs" />
     <Compile Include="src\Common\ExcelReadUtils.cs" />
     <Compile Include="src\Common\ProjectFile.cs" />
     <Compile Include="src\Converters\FullPathToFileNameConverter.cs" />
