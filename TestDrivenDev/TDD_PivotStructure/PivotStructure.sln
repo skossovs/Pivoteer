@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PivotStructure", "TDD_PivotStructure\PivotStructure.csproj", "{2126C560-8A22-480C-98E1-801E1C15406B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PivotStructure", "PivotStructure\PivotStructure.csproj", "{2126C560-8A22-480C-98E1-801E1C15406B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pivot.Accessories", "Pivot.Accessories\Pivot.Accessories.csproj", "{639C31A5-1B9D-4DFA-A864-66814C3E0C31}"
 EndProject

@@ -17,9 +17,9 @@ namespace PivoteerWPF.MVVM
         private const string C_STOCK_MKTCAP  = "StockMktCap";
         private const string C_OPEN          = "OPEN";
 
-        private const string C_JSON_WITH_EXCEL  = @"C:\Users\Stan\Documents\GitHub\Pivoteer\TestDrivenDev\TDD_PivotStructure\PivoteerWPF\bin\Debug\ProjectSamples\Excel.json";
-        private const int    C_KEY_STOCK_PRICES = 632908269;
-        private const int    C_KEY_STOCK_MKTCAP = -999999105;
+        private const string C_JSON_WITH_EXCEL  = @"..\Debug\ProjectSamples\Excel.json";
+        private const int    C_KEY_STOCK_PRICES = 67616754;
+        private const int    C_KEY_STOCK_MKTCAP = 1544075414;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
