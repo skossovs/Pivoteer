@@ -1,6 +1,7 @@
 ﻿using PivoteerWPF.Common;
 using PivoteerWPF.Data;
 using PivoteerWPF.MVVM.Messages;
+using PivoteerWPF.src.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -101,7 +102,7 @@ namespace PivoteerWPF.MVVM
                 RootGroup.SubGroups.Add(g);
 
                 properties = new Dictionary<string, string>();
-                properties.Add("ExcelFilePath", f.ExcelFileFullPath);
+                properties.Add(ExcelContentConstants.ExcelFilePathNodeName, f.ExcelFileFullPath);
 
                 lstNodes.Add(new TreeNode()
                 {
@@ -120,9 +121,10 @@ namespace PivoteerWPF.MVVM
                     });
 
                     properties = new Dictionary<string, string>();
-                    properties.Add("ExcelFilePath", f.ExcelFileFullPath); // TODO: magic constants
-                    properties.Add("SheetName", s.SheetName);
-                    properties.Add("ClassName", s.ClassName);
+                    properties.Add(ExcelContentConstants.ExcelFilePathNodeName, f.ExcelFileFullPath);
+                    properties.Add(ExcelContentConstants.SheetNameNode, s.SheetName);
+                    properties.Add(ExcelContentConstants.ClassNameNode, s.ClassName);
+
                     lstNodes.Add(new TreeNode()
                     {
                         Type = TreeNodeType.ExcelSheet,

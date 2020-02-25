@@ -1,6 +1,7 @@
 ﻿using PivoteerWPF.Common;
 using PivoteerWPF.Data;
 using PivoteerWPF.MVVM.Messages;
+using PivoteerWPF.src.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +15,8 @@ namespace PivoteerWPF.MVVM
 {
     class TabItemsModel : INotifyPropertyChanged
     {
-        IList<TreeNode> _treeNodes;
-        TreeNode        _treeNode;
+        IList<TreeNode>  _treeNodes;
+        TreeNode         _treeNode;
         private readonly DelegateCommand<string> _addExcelFileCommand;
         private readonly DelegateCommand<string> _pivotCommandRun;
         private readonly DelegateCommand<string> _pivotCommandValidate;
@@ -76,7 +77,7 @@ namespace PivoteerWPF.MVVM
         {
             get
             {
-                return _treeNode.Properties["ExcelFilePath"]; // TODO: magic constants must be in one place
+                return _treeNode.Properties[ExcelContentConstants.ExcelFilePathNodeName];
             }
         }
 
@@ -137,24 +138,24 @@ namespace PivoteerWPF.MVVM
         {
             IEnumerable<PivotClassBase> lstData = null;
             // Load from Excel
-            var path      = _treeNode.Properties["ExcelFilePath"];
-            var sheet     = _treeNode.Properties["SheetName"];
-            var className = _treeNode.Properties["ClassName"];
+            var path      = _treeNode.Properties[ExcelContentConstants.ExcelFilePathNodeName];
+            var sheet     = _treeNode.Properties[ExcelContentConstants.SheetNameNode];
+            var className = _treeNode.Properties[ExcelContentConstants.ClassNameNode];
 
             switch (className)
             {
                 case "OptionPrice":
-                    throw new Exception("OptionPrice is not implemented actually, TODO: excel is not populated.");
-                    lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, "Value");
+                    throw new Exception("OptionPrice is not implemented yet, excel file is not populated.");
+                    lstData = ExcelReadUtils<PivotClasses.Option>.RetrieveSheetData(path, sheet, ExcelContentConstants.ValueFieldName);
                     break;
                 case "Stock":
-                    lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, "Value"); // TODO: Magic constant, replace with attributes
+                    lstData = ExcelReadUtils<PivotClasses.Stock>.RetrieveSheetData(path, sheet, ExcelContentConstants.ValueFieldName);
                     break;
                 case "TwoByTwo":
-                    lstData = ExcelReadUtils<PivotClasses.TwoByTwo>.RetrieveSheetData(path, sheet, "Value");
+                    lstData = ExcelReadUtils<PivotClasses.TwoByTwo>.RetrieveSheetData(path, sheet, ExcelContentConstants.ValueFieldName);
                     break;
                 case "ThreeByTwo":
-                    lstData = ExcelReadUtils<PivotClasses.ThreeByTwo>.RetrieveSheetData(path, sheet, "Value");
+                    lstData = ExcelReadUtils<PivotClasses.ThreeByTwo>.RetrieveSheetData(path, sheet, ExcelContentConstants.ValueFieldName);
                     break;
                 default:
                     throw new Exception($"{className} referenced class is not considered in switch-case");

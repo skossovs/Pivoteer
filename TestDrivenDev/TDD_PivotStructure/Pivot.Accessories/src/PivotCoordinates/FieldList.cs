@@ -30,17 +30,6 @@ namespace Pivot.Accessories.PivotCoordinates
             return comparisonResult;
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    var listObj = (ListComparer)obj;
-        //    for (int i = 0; i < listObj.Count; i++)
-        //    {
-        //        if (listObj[i] != this[i])
-        //            return false;
-        //    }
-        //    return true;
-        //}
-
         public int GetRank()
         {
             int rank = 0;
