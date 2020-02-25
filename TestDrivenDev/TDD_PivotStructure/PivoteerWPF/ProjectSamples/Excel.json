@@ -2,7 +2,7 @@
   "ProjectDescription": "TheOnlyExcel",
   "ExcelFiles": [
     {
-      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Stocks.xlsx",
+      "ExcelFileFullPath": "..\\Debug\\ProjectSamples\\Stocks.xlsx",
       "Sheets": [
         {
           "SheetName": "Prices",
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\Symmetrical.xlsx",
+      "ExcelFileFullPath": "..\\Debug\\ProjectSamples\\Symmetrical.xlsx",
       "Sheets": [
         {
           "SheetName": "2by2",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "ExcelFileFullPath": "C:\\Users\\Stan\\Documents\\GitHub\\Pivoteer\\TestDrivenDev\\TDD_PivotStructure\\PivoteerWPF\\ProjectSamples\\OptionPricing.xlsx",
+      "ExcelFileFullPath": "..\\Debug\\ProjectSamples\\OptionPricing.xlsx",
       "Sheets": [
         {
           "SheetName": "AMD",

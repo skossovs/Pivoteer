@@ -56,8 +56,9 @@ namespace PivoteerWPF.Common
             bool isCancelled = false;
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.InitialDirectory = path;
-            openFileDialog.AddExtension = true;
             openFileDialog.DefaultExt = "json";
+            openFileDialog.Filter = "JSON documents (*.json)|*.json";
+            openFileDialog.AddExtension = true;
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -74,8 +75,9 @@ namespace PivoteerWPF.Common
             bool isCancelled = false;
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.InitialDirectory = path;
+            saveFileDialog.DefaultExt = "json";
+            saveFileDialog.Filter = "JSON documents (*.json)|*.json";
             saveFileDialog.AddExtension = true;
-            saveFileDialog.DefaultExt = "json"; // TODO: extension filter is not working
 
             if (saveFileDialog.ShowDialog() == true)
             {

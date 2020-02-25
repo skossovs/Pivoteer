@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +11,8 @@ namespace PivoteerWPF.Common
 {
     class ExcelReadUtils<T>
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public static IEnumerable<T> RetrieveSheetData(string fullPath, string sheetName, string valueFieldName)
         {
             var result = new List<T>();
@@ -57,7 +60,7 @@ namespace PivoteerWPF.Common
                             }
                             catch (Exception ex)
                             {
-                                // TODO: handle exceptions
+                                logger.Warn($"Cell Data format wrong {ex.Message}");
                             }
                             i++;
                         }

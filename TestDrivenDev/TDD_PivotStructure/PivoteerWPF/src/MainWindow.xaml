@@ -19,6 +19,7 @@
         <vm:TabItemsModel                 x:Key="TabItemsModel"></vm:TabItemsModel>
         <vm:CrossTableModel               x:Key="PivotModel"></vm:CrossTableModel>
         <vm:TreeNodesDataTemplateSelector x:Key="myDataTemplateSelector"/>
+        <vm:LogViewModel                  x:Key="LogViewModel"></vm:LogViewModel>
 
         <converters:FullPathToFileNameConverter x:Key="FullPathToFileName"/>
 
@@ -170,7 +171,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
@@ -224,10 +225,10 @@
             </ContentControl>
         </Grid>
         <Grid Name="gridStatus" Grid.Row="2">
-            <RichTextBox Name="richLog">
+            <RichTextBox Name="richLog" DataContext="{Binding Source={StaticResource LogViewModel}}">
                 <FlowDocument>
                     <Paragraph>
-                        <Run Text="Something"/>
+                        <Run Text="{Binding Path=LogText}"/>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
