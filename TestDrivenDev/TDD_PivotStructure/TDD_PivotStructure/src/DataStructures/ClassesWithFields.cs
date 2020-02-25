@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TDD_PivotStructure.DataStructures
+namespace PivotStructure.DataStructures
 {
     [Pivot.Accessories.Attributes.Aggregators(AggregatorType = typeof(AggregationFunctions))]
     public class TwoByTwo

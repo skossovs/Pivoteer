@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TDD_PivotStructure.DataStructures;
+using PivotStructure.DataStructures;
 
-namespace TDD_PivotStructure.DataGenerators
+namespace PivotStructure.DataGenerators
 {
     public class SmallDatasets
     {
