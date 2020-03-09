@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using Pivot.Accessories.PivotCoordinates;
 using Pivot.Accessories.Mapping;
 using System.Linq.Expressions;
+using Pivot.Accessories.Extensions;
 
 namespace Pivot.Accessories
 {
     public class AggregationTreeGenerator<T, TAggregator> where T : class where TAggregator : class
     {
         TypeWrapper<T, TAggregator> typeWrapper;
+        private const int DecimalErrorNumber = -2146233033;
+
         public AggregationTreeGenerator(TypeWrapper<T, TAggregator> t)
         {
             typeWrapper = t;
@@ -93,8 +96,18 @@ namespace Pivot.Accessories
         public Func<int, decimal?> CreateXGetter(int y, string[,] matrix)
         {
             return  x => {
-                var v = matrix[x, y];
-                return string.IsNullOrEmpty(v) ? (decimal?) null : Convert.ToDecimal(v);
+                try
+                {
+                    var v = matrix[x, y];
+                    return string.IsNullOrEmpty(v) ? (decimal?)null : Convert.ToDecimal(v);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.HResult == DecimalErrorNumber)
+                        throw new MatrixGetterException(matrix, x, y);
+                    else
+                        throw;
+                }
             };
         }
         public Action<int, decimal?> CreateXSetter(int y, string[,] matrix)
@@ -104,8 +117,18 @@ namespace Pivot.Accessories
         public Func<int, decimal?> CreateYGetter(int x, string[,] matrix)
         {
             return y => {
-                var v = matrix[x, y];
-                return string.IsNullOrEmpty(v) ? (decimal?)null : Convert.ToDecimal(v);
+                try
+                {
+                    var v = matrix[x, y];
+                    return string.IsNullOrEmpty(v) ? (decimal?)null : Convert.ToDecimal(v);
+                }
+                catch(Exception ex)
+                {
+                    if (ex.HResult == DecimalErrorNumber)
+                        throw new MatrixGetterException(matrix, x, y);
+                    else
+                        throw;
+                }
             };
         }
         public Action<int, decimal?> CreateYSetter(int x, string[,] matrix)

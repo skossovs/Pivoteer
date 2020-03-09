@@ -220,7 +220,17 @@ namespace Pivot.Accessories.PivotCoordinates
                 }
             });
 
-            Task.WaitAll(taskCreateGetterSetterByX, taskCreateGetterSetterByY);
+            try
+            {
+                Task.WaitAll(taskCreateGetterSetterByX, taskCreateGetterSetterByY);
+            }
+            catch(AggregateException ae)
+            {
+                foreach (var e in ae.InnerExceptions)
+                {
+                    throw e;
+                }
+            }
             #endregion
 
             var result                    = new GeneratedData();
